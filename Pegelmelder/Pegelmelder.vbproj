@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SchlumpfSoft.Pegelmelder</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyVersion>1.2024.12.28</AssemblyVersion>
+    <FileVersion>1.2024.12.28</FileVersion>
+    <AssemblyName>pm</AssemblyName>
+    <OptionStrict>On</OptionStrict>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>Pegelmelder</Title>
+    <Version>1.2024.12.28</Version>
+    <Authors>Andreas Sauer</Authors>
+    <Company>SchlumpfSoft</Company>
+    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CsvFileManager.vb" />
+    <Compile Remove="EmailDocument.vb" />
+    <Compile Remove="MailClient.vb" />
+    <Compile Remove="WebSiteParser.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="raspi4.bat" />
+    <None Remove="Ressourcen\ConfigFileTemplate.txt" />
+    <None Remove="Ressourcen\DatenZeilenTemplate.txt" />
+    <None Remove="Ressourcen\EmaildatenTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Ressourcen\ConfigFileTemplate.txt" />
+    <EmbeddedResource Include="Ressourcen\EmaildatenTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CsvFileManager\CsvFileManager.vbproj" />
+    <ProjectReference Include="..\EmailDocument\EmailDocument.vbproj" />
+    <ProjectReference Include="..\MailClient\MailClient.vbproj" />
+    <ProjectReference Include="..\WebSiteParser\WebSiteParser.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Resources.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SchlumpfSoft.CsvFileManager</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <UseApplicationFramework>False</UseApplicationFramework>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <OptionStrict>On</OptionStrict>
+    <Version>1.2024.12.28</Version>
+    <Authors>Andreas Sauer</Authors>
+    <Company>SchlumpfSoft</Company>
+    <Description>Anwendungsbibliothek zum verwalten einer CSV-Datei</Description>
+    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+</Project>

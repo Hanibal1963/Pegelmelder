@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SchlumpfSoft.EmailDocument</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <OptionStrict>On</OptionStrict>
+    <Version>1.2024.12.28</Version>
+    <Company>SchlumpfSoft</Company>
+    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\BleilochDatenTabellenTemplate.txt" />
+    <None Remove="Resources\DatenTableTemplate.txt" />
+    <None Remove="Resources\DatenZeilenTemplate.txt" />
+    <None Remove="Resources\EmailTemplate.txt" />
+    <None Remove="Resources\HohenwarteDatenTabellenTemplate.txt" />
+    <None Remove="Resources\LeerzellenTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BleilochDatenTabellenTemplate.txt" />
+    <EmbeddedResource Include="Resources\DatenTableTemplate.txt" />
+    <EmbeddedResource Include="Resources\DatenZeilenTemplate.txt" />
+    <EmbeddedResource Include="Resources\EmailTemplate.txt" />
+    <EmbeddedResource Include="Resources\HohenwarteDatenTabellenTemplate.txt" />
+    <EmbeddedResource Include="Resources\LeerzellenTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Resources.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

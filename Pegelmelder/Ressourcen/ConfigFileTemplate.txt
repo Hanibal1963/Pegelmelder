@@ -1,0 +1,6 @@
+﻿#Email-Konfiguration
+Server:
+User:
+Passwort:
+Port:
+Absender:

@@ -1,0 +1,372 @@
+## Ignorieren Sie temporäre Visual Studio-Dateien, Build-Ergebnisse und von beliebten Visual Studio-Add-Ons generierte Dateien.
+##
+## Erhalten Sie das Neueste von https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
+
+# Benutzerspezifische Dateien
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Benutzerspezifische Dateien (Mono Develop/Xamarin Studio)
+*.userprefs
+
+# Automatisch generierte Monodateien
+mono_crash.*
+
+# Build-Ergebnisse
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio 2015/2017 Cache/Optionsverzeichnis
+.vs/
+
+# Entfernen Sie das Kommentarzeichen, wenn Sie Aufgaben haben, die die statischen Dateien des Projekts in wwwroot erstellen
+#wwwroot/
+
+# Automatisch generierte Dateien in Visual Studio 2017
+Generated\ Files/
+
+# MSTest-Testergebnisse
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# Build-Ergebnisse eines ATL-Projektes
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# Benchmark Ergebnisse
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET-Gerüstbau
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Mit Visual Studio erstellte Dateien
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Chutzpah-Testdateien
+_Chutzpah*
+
+# Visual C++-Cachedateien
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio-Profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Visual Studio-Ablaufverfolgungsdateien
+*.e2e
+
+# TFS 2012 Lokaler Arbeitsbereich
+$tf/
+
+# Toolkit zur Automatisierung der Lenkung
+*.gpState
+
+# Re Sharper ist ein .NET-Codierungs-Add-In
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Team City ist ein Build-Add-In
+_TeamCity*
+
+# Dot Cover ist ein Code Coverage Tool
+*.dotCover
+
+# Axo Cover ist ein Code Coverage Tool
+.axoCover/*
+!.axoCover/settings.json
+
+# Coverlet ist ein kostenloses, plattformübergreifendes Code Coverage Tool
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Ergebnisse der Visual Studio-Codeabdeckung
+*.coverage
+*.coveragexml
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# MightyMoose
+*.mm.*
+AutoTest.Net/
+
+# Web workbench (sass)
+.sass-cache/
+
+# Installshield-Ausgabeordner
+[Ee]xpress/
+
+# Doc Project ist ein Add-In zur Dokumentationsgenerierung
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+
+# Click-Once-Verzeichnis
+publish/
+
+# Webausgabe veröffentlichen
+*.[Pp]ublish.xml
+*.azurePubxml
+
+# Hinweis: Kommentieren Sie die nächste Zeile, wenn Sie Ihre Webbereitstellungseinstellungen einchecken möchten, 
+# aber Datenbankverbindungszeichenfolgen (mit möglichen Passwörtern) werden unverschlüsselt sein
+*.pubxml
+*.publishproj
+
+# Microsoft Azure Web App-Veröffentlichungseinstellungen. Kommentieren Sie die nächste Zeile, wenn Sie 
+# Ihre Azure Web App-Veröffentlichungseinstellungen einchecken möchten. Vertrauliche Informationen, die 
+# in diesen Skripten enthalten sind, werden jedoch unverschlüsselt bleiben.
+PublishScripts/
+
+# NuGet Packages
+*.nupkg
+
+# NuGet Symbol Packages
+*.snupkg
+
+# Der Ordner packages kann wegen Package Restore ignoriert werden
+**/[Pp]ackages/*
+
+# außer build/, das als MSBuild-Ziel verwendet wird.
+!**/[Pp]ackages/build/
+
+# Entfernen Sie ggf. die Kommentarzeichen. Normalerweise wird es jedoch bei Bedarf neu generiert. 
+#!**/[Pp]ackages/repositories.config 
+# Nu Get v3's project.json files produziert mehr ignorierbare Dateien
+*.nuget.props
+*.nuget.targets
+
+# Microsoft Azure Build-Ausgabe
+csx/
+*.build.csdef
+
+# Microsoft Azure Emulator
+ecf/
+rcf/
+
+# Windows Store-App-Paketverzeichnisse und -Dateien
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload
+
+# Visual Studio-Cachedateien
+# Dateien mit der Endung .cache können ignoriert werden
+*.[Cc]ache
+
+# aber behalten Sie Verzeichnisse im Auge, die auf .cache enden
+!?*.[Cc]ache/
+
+# Others
+ClientBin/
+~$*
+*~
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+
+# Das Einbinden von Dateien mit starkem Namen kann ein Sicherheitsrisiko darstellen 
+# (https://github.com/github/gitignore/pull/2483#issue-259490424) 
+#*.snk
+
+# Da es mehrere Workflows gibt, heben Sie die Kommentierung der nächsten Zeile auf, um Bower-Komponenten zu ignorieren 
+# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622) 
+#bower-Komponenten/
+
+# RIA/Silverlight-Projekte
+Generated_Code/
+
+# Backup- und Berichtsdateien vom Konvertieren einer alten Projektdatei 
+# in eine neuere Visual Studio-Version. Backup-Dateien werden nicht benötigt, 
+# weil wir Git haben ;-)
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+ServiceFabricBackup/
+*.rptproj.bak
+
+# SQL Server-Dateien
+*.mdf
+*.ldf
+*.ndf
+
+# Business Intelligence-Projekte
+*.rdl.data
+*.bim.layout
+*.bim_*.settings
+*.rptproj.rsuser
+*- [Bb]ackup.rdl
+*- [Bb]ackup ([0-9]).rdl
+*- [Bb]ackup ([0-9][0-9]).rdl
+
+# Microsoft-Fälschungen
+FakesAssemblies/
+
+# Ghost Doc-Plugin-Einstellungsdatei
+*.GhostDoc.xml
+
+# Node.js-Tools für Visual Studio
+.ntvs_analysis.dat
+node_modules/
+
+# Visual Studio 6-Buildprotokoll
+*.plg
+
+# Visual Studio 6-Arbeitsbereichsoptionsdatei
+*.opt
+
+# Automatisch generierte Arbeitsbereichsdatei von Visual Studio 6 (enthält, welche Dateien geöffnet waren usw.)
+*.vbw
+
+# Ausgabe des Visual Studio Light Switch-Builds
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+
+# Paket dependency manager
+.paket/paket.exe
+paket-files/
+
+# FAKE - F# Make
+.fake/
+
+# CodeRush personal settings
+.cr/personal
+
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+# Cake - Uncomment if you are using it
+# tools/**
+# !tools/packages.config
+
+# Tabs Studio
+*.tss
+
+# Telerik's JustMock configuration file
+*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+.mfractor/
+
+# Lokaler Verlauf für Visual Studio
+.localhistory/
+
+# Beat Pulse Healthcheck - temporäre Datenbank
+healthchecksdb
+
+# Sicherungsordner für das Tool „Package Reference Convert“ in Visual Studio 2017
+MigrationBackup/
+
+# Arbeitsordner von Ionide (plattformübergreifende F# VS Code-Tools)
+.ionide/
+
+# Fody – automatisch generiertes XML-Schema
+FodyWeavers.xsd
+
+# private Dateien
+/raspi4.bat

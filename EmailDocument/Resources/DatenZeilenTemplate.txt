@@ -1,0 +1,5 @@
+﻿<tr>
+  <td class="celldate">%DATUM%</td>
+  <td class="cellpegel">%PEGEL%</td>
+  <td class="celldifferenz">%DIFFERENZ%</td>
+</tr>

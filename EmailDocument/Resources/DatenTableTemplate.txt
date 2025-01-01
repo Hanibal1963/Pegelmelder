@@ -1,0 +1,7 @@
+﻿<table>
+  <tr id="Daten">
+    %HOHENWARTEDATEN%
+    %LEERZELLE%
+    %BLEILOCHDATEN%
+  </tr>
+</table>
