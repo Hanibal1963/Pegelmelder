@@ -1,7 +1,7 @@
 # Pegelmelder
 
 ## Einführung
-Pegelmelder ist ein VB.NET-Projekt, das entwickelt wurde, um die Pegelstände der Talsperren Bleiloch und Hohenwarte zu überwachen und die Daten in CSV-Dateien zu speichern. Zusätzlich versendet das Programm E-Mails mit den aktuellen Pegeldaten an eine Liste von Empfängern.
+Pegelmelder ist ein VB.NET-Projekt, das für den **RaspberryPi** entwickelt wurde, um die Pegelstände der Talsperren Bleiloch und Hohenwarte zu überwachen und die Daten in CSV-Dateien zu speichern. Zusätzlich versendet das Programm E-Mails mit den aktuellen Pegeldaten an eine Liste von Empfängern.
 
 ## Features
 - Herunterladen von Pegeldaten von einer Website
@@ -37,16 +37,19 @@ Das Hauptprogramm (`Program.vb`) führt die folgenden Schritte aus:
 1. Stelle sicher, dass die erforderlichen .NET-Abhängigkeiten installiert sind.
 2. Klone das Repository: `git clone https://github.com/Hanibal1963/Pegelmelder.git`
 3. Öffne das Projekt in Visual Studio.
-4. Konfiguriere die `pm.conf`-Datei mit den SMTP-Serverdetails und anderen Einstellungen.
-5. Führe das Programm aus, um die Pegeldaten herunterzuladen und E-Mails zu versenden.
+4. Erstelle das Projekt und veröffentliche die Ausgabe auf deinem **RaspberryPi** (`/home/pi/.bin/pegelmelder`).
+5. Konfiguriere die `home/pi/.config/pm/pm.conf`-Datei mit den SMTP-Serverdetails deines Email-Servers.
+6. Konfiguriere die Datendatei `home/pi/.config/pm/Emaildaten.csv` mit den Daten der Emailempfänger.
+7. Führe das Programm aus, um die Pegeldaten herunterzuladen und E-Mails zu versenden (`home/pi/.bin/pegelmelder/pm`).
+8. Die Datendateien findest du im Verzeichnis `home/pi/.local/pm`.
 
 ## Konfigurationsdatei
-Die `pm.conf`-Datei enthält die folgenden Einstellungen:
-- Server: Die Adresse des SMTP-Servers
-- User: Der Benutzername für den SMTP-Server
-- Passwort: Das Passwort für den SMTP-Server
-- Port: Der Port für den SMTP-Server
-- Absender: Die Absender-E-Mail-Adresse
+Die `home/pi/.config/pm/pm.conf`-Datei enthält die folgenden Einstellungen:
+- **Server:** Die Adresse des SMTP-Servers
+- **User:** Der Benutzername für den SMTP-Server
+- **Passwort:** Das Passwort für den SMTP-Server
+- **Port:** Der Port für den SMTP-Server
+- **Absender:** Die Absender-E-Mail-Adresse
 
 ## Datenbanken
 Das Projekt verwendet mehrere CSV-Dateien zur Speicherung von Daten:
