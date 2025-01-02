@@ -97,21 +97,38 @@ Module Program
 		'Merker für neue Daten setzen
 		NewHohenwarteData = False
 		NewBleilochData = False
+
 		'Neue Pegeldaten speichern
 		NewHohenwarteData = AddHohenwartePegel(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
 		NewBleilochData = AddBleilochPegel(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
-		'Differenzwerte wenn neue Daten vorhanden sind berechnen
+
+		'Differenzwerte berechnen wenn neue Daten in Bleiloch vorhanden sind
 		If NewBleilochData Then
+			Console.WriteLine($"Program.Main:")
+			Console.WriteLine($"Neue Daten in Bleiloch vorhanden. -> Differenz berechnen")
 			CalculateBleilochDifferences(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
 		End If
+
+		'Differenzwerte berechnen wenn neue Daten in Hohenwarte vorhanden sind
 		If NewHohenwarteData Then
+			Console.WriteLine($"Program.Main:")
+			Console.WriteLine($"Neue Daten in Hohenwarte vorhanden. -> Differenz berechnen")
 			CalculateHohenwarteDifferences(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
 		End If
-		'Beenden wenn keine neuen Daten vorhanden sind
-		If NewHohenwarteData = False And NewBleilochData = False Then Exit Sub
-		SendMails() 'Emails senden
+
+		'Überprüfen ob neue Daten vorliegen
+		If NewHohenwarteData = False And NewBleilochData = False Then
+			'Beenden wenn keine neuen Daten vorhanden sind
+			Exit Sub
+		Else
+			'Emails senden wenn neue Daten vorhanden sind
+			SendMails()
+		End If
 	End Sub
 
+	''' <summary>
+	''' 
+	''' </summary>
 	Private Sub SendMail(FirstName As String, Email As String, Modus As Integer, Records As Integer)
 		Dim doc As New Document 'Emailvorlage erstellen
 		doc.SetName(FirstName) 'Anrede einsetzen
@@ -156,27 +173,44 @@ Module Program
 		mail.Send(Absender, "pegelmelder", "Pegeldaten", Email, doc.DocumentText)
 	End Sub
 
-  Private Function LoadEmailData() As List(Of String)
-    Dim datafilepath As String = ConfigFilePath & Path.DirectorySeparatorChar & EMAILDATAFILE
+	''' <summary>
+	''' 
+	''' </summary>
+	Private Function LoadEmailData() As List(Of String)
+		Dim datafilepath As String = ConfigFilePath & Path.DirectorySeparatorChar & EMAILDATAFILE
 		Dim DataFile As New CsvFile(datafilepath, EMAILDATAHEADER)
 		Return DataFile.Data
 	End Function
 
-	Private Function AddBleilochPegel(File As String) As Boolean
+  ''' <summary>
+  ''' Fügt einen neuen Datensatz in die Bleilochpegeldaten ein
+  ''' falls noch nicht vorhanden.
+  ''' </summary>
+  Private Function AddBleilochPegel(File As String) As Boolean
 		Dim result As Boolean = False
 		Using PegelDataFile As New CsvFile(File, PEGELDATAHEADER)
-      'alle Datensätze der Webdaten durchsuchen
-      Dim WebData As New Parser(URL)
-      Dim index As Integer
+			'alle Datensätze der Webdaten durchsuchen
+			Dim WebData As New Parser(URL)
+			Dim index As Integer
 			For Each row As String In WebData.GetBleilochData
 				'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
 				index = PegelDataFile.FindRecord(row.Split(";").First)
-				If index = -1 Then : PegelDataFile.AddRecord(row) : result = True : End If
+				If index = -1 Then
+					Console.WriteLine($"Program.AddBleilochPegel:")
+					Console.WriteLine($"Es wurde ein neuer Datensatz gefunden:")
+					Console.WriteLine($"{row}")
+					PegelDataFile.AddRecord(row)
+					result = True
+				End If
 			Next
 		End Using
 		Return result
 	End Function
 
+	''' <summary>
+	''' Fügt einen neuen Datensatz in die Hohenwartepegeldaten ein
+	''' falls noch nicht vorhanden.
+	''' </summary>
 	Private Function AddHohenwartePegel(File As String) As Boolean
 		Dim result As Boolean = False
 		Using PegelDataFile As New CsvFile(File, PEGELDATAHEADER)
@@ -186,12 +220,21 @@ Module Program
 			For Each row As String In WebData.GetHohenwarteData
 				'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
 				index = PegelDataFile.FindRecord(row.Split(";").First)
-				If index = -1 Then : PegelDataFile.AddRecord(row) : result = True : End If
+				If index = -1 Then
+					Console.WriteLine($"Program.AddHohenwartePegel:")
+					Console.WriteLine($"Es wurde ein neuer Datensatz gefunden:")
+					Console.WriteLine($"{row}")
+					PegelDataFile.AddRecord(row)
+					result = True
+				End If
 			Next
 		End Using
 		Return result
 	End Function
 
+	''' <summary>
+	''' 
+	''' </summary>
 	Private Sub CalculateHohenwarteDifferences(File As String)
 		Dim tempdata As List(Of String)
 		Dim oldpegel As Integer
@@ -224,6 +267,9 @@ Module Program
 		End Using
 	End Sub
 
+	''' <summary>
+	''' 
+	''' </summary>
 	Private Sub CalculateBleilochDifferences(File As String)
 		Dim tempdata As List(Of String)
 		Dim oldpegel As Integer
@@ -256,6 +302,9 @@ Module Program
 		End Using
 	End Sub
 
+	''' <summary>
+	''' 
+	''' </summary>
 	Private Function GetBleilochData(File As String, Records As Integer, Linetemplate As String) As String
 		Dim result As String = ""
 		Dim record As String = Linetemplate
@@ -275,6 +324,9 @@ Module Program
 		Return result
 	End Function
 
+	''' <summary>
+	''' 
+	''' </summary>
 	Private Function GetHohenwarteData(File As String, Records As Integer, Linetemplate As String) As String
 		Dim result As String = ""
 		Dim record As String = Linetemplate
@@ -294,7 +346,9 @@ Module Program
 		Return result
 	End Function
 
-	' Emails an alle Empfänger senden
+	''' <summary>
+	''' Emails an alle Empfänger senden
+	''' </summary>
 	Private Sub SendMails()
 		Dim vname As String
 		Dim name As String
@@ -315,7 +369,9 @@ Module Program
 		Next
 	End Sub
 
-	'	Initialisiert die Pfadvariable für Konfiguration und erstellt einen Ordner falls er nicht existiert
+	''' <summary>
+	''' Initialisiert die Pfadvariable für Konfiguration und erstellt einen Ordner falls er nicht existiert
+	''' </summary>
 	Private Sub SetConfigPath()
 		'Ordner zur Konfiguration festlegen
 		ConfigFilePath = Environment.GetEnvironmentVariable("HOME") & Path.AltDirectorySeparatorChar & CONFIGPATH
@@ -331,7 +387,10 @@ Module Program
 		End If
 	End Sub
 
-	' Initialisiert die Pfadvariabel für Daten und	erstellt einen Ordner falls er nicht existiert
+	''' <summary>
+	''' Initialisiert die Pfadvariabel für Daten und erstellt 
+	''' einen Ordner falls er nicht existiert.
+	''' </summary>
 	Private Sub SetDataPath()
 		'Ordner zur Datenspeicherung festlegen
 		DataFilePath = Environment.GetEnvironmentVariable("HOME") & Path.AltDirectorySeparatorChar & DATAPATH
@@ -347,7 +406,9 @@ Module Program
 		End If
 	End Sub
 
-	'	Lädt die Konfigurationsdaten
+	''' <summary>
+	''' Lädt die Konfigurationsdaten.
+	''' </summary>
 	Private Sub LoadConfig(file As String)
 		For Each line As String In IO.File.ReadAllLines(file)
 			Select Case True
