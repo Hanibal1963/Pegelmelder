@@ -12,7 +12,6 @@ Imports System.Net.Mail
 ''' </summary>
 Public Class Client
 
-	Private ReadOnly smtpsrv As New SmtpClient
 
 	''' <summary>
 	''' Erstellt einen neuen EmailClient
@@ -23,7 +22,7 @@ Public Class Client
 	''' <param name="Passwd">Anmeldepasswort des SMTP-Servers</param>
 	''' <param name="SSl">Verschlüsselung</param>
 	Public Sub New(Host As String, Port As Integer, User As String, Passwd As String, Optional SSl As Boolean = True)
-		With Me.smtpsrv
+		With smtpsrv
 			.Host = Host
 			.Port = Port
 			.UseDefaultCredentials = False
@@ -51,7 +50,7 @@ Public Class Client
 			.To.Add([To])
 		End With
 		Try
-			Me.smtpsrv.Send(mail)
+			smtpsrv.Send(mail)
 		Catch ex As Exception
 		End Try
 	End Sub
