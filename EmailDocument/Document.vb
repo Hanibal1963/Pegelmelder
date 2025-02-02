@@ -45,7 +45,7 @@ Public Class Document
 	''' </summary>
 	Public Shared Sub SetName(FirstName As String)
 
-		DocText = DocText.Replace("%VORNAME%", FirstName)
+		DocText = DocText.Replace(FIRST_NAME, FirstName)
 
 	End Sub
 
@@ -56,7 +56,7 @@ Public Class Document
 
 		Dim builder As New StringBuilder
 		Dim unused = builder.AppendLine(My.Resources.DatenTableTemplate)
-		DocText = DocText.Replace("%DATENTABELLE%", builder.ToString)
+		DocText = DocText.Replace(DATA_TABLE, builder.ToString)
 
 	End Sub
 
@@ -67,7 +67,7 @@ Public Class Document
 
 		Dim builder As New StringBuilder
 		Dim unused = builder.AppendLine(My.Resources.LeerzellenTemplate)
-		DocText = DocText.Replace("%LEERZELLE%", builder.ToString)
+		DocText = DocText.Replace(BLANK_CELL, builder.ToString)
 
 	End Sub
 
@@ -78,7 +78,7 @@ Public Class Document
 
 		Dim builder As New StringBuilder
 		Dim unused = builder.AppendLine(My.Resources.HohenwarteDatenTabellenTemplate)
-		DocText = DocText.Replace("%HOHENWARTEDATEN%", builder.ToString)
+		DocText = DocText.Replace(HOHENWARTE_DATA, builder.ToString)
 
 	End Sub
 
@@ -89,7 +89,7 @@ Public Class Document
 
 		Dim builder As New StringBuilder
 		Dim unused = builder.AppendLine(My.Resources.BleilochDatenTabellenTemplate)
-		DocText = DocText.Replace("%BLEILOCHDATEN%", builder.ToString)
+		DocText = DocText.Replace(BLEILOCH_DATA, builder.ToString)
 
 	End Sub
 
@@ -98,7 +98,7 @@ Public Class Document
 	''' </summary>
 	Public Shared Sub FillData(Data As String)
 
-		DocText = DocText.Replace("%DATENZEILEN%", Data)
+		DocText = DocText.Replace(DATA_LINES, Data)
 
 	End Sub
 
@@ -107,7 +107,7 @@ Public Class Document
 	''' </summary>
 	Public Shared Sub SetAppName(Name As String)
 
-		DocText = DocText.Replace("%APPLICATION%", Name)
+		DocText = DocText.Replace(APP_NAME, Name)
 
 	End Sub
 
@@ -116,7 +116,7 @@ Public Class Document
 	''' </summary>
 	Public Shared Sub SetAppVersion(Version As String)
 
-		DocText = DocText.Replace("%VERSION%", Version)
+		DocText = DocText.Replace(APP_VERSION, Version)
 
 	End Sub
 
@@ -125,7 +125,7 @@ Public Class Document
 	''' </summary>
 	Public Shared Sub SetAppCopy(AppCopyright As String)
 
-		DocText = DocText.Replace("%COPYRIGHT%", AppCopyright)
+		DocText = DocText.Replace(APP_COPY, AppCopyright)
 
 	End Sub
 
@@ -137,14 +137,5 @@ Public Class Document
 		DocText = DocText.Replace(PlaceHolder, "")
 
 	End Sub
-
-	'''' <summary>
-	'''' Setz den Verwaltungslink ein
-	'''' </summary>
-	'''' <param name="ManageLink">
-	'''' </param>
-	'Private Sub SetManageLink(ManageLink As String)
-	'	Me._documenttext = Me._documenttext.Replace("%MANGELINK%", ManageLink)
-	'End Sub
 
 End Class
