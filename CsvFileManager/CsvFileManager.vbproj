@@ -12,6 +12,8 @@
     <Company>SchlumpfSoft</Company>
     <Description>Anwendungsbibliothek zum verwalten einer CSV-Datei</Description>
     <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <AssemblyVersion>1.2025.0202.1656</AssemblyVersion>
+    <FileVersion>1.2025.0202.1656</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
