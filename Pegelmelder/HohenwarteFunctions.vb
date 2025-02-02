@@ -69,18 +69,21 @@ Module HohenwarteFunctions
     Using PegelDataFile As New CsvFile(File, PEGELDATAHEADER)
 
       'alle Datensätze der Webdaten durchsuchen
-      Dim WebData As New Parser(URL)
-      Dim index As Integer
-      For Each row As String In WebData.GetHohenwarteData
+      Using WebData As New Parser(URL)
 
-        'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
-        index = CsvFile.FindRecord(row.Split(";").First)
-        If index = -1 Then
-          CsvFile.AddRecord(row)
-          result = True
-        End If
+        Dim index As Integer
+        For Each row As String In Parser.GetHohenwarteData
 
-      Next
+          'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
+          index = CsvFile.FindRecord(row.Split(";").First)
+          If index = -1 Then
+            CsvFile.AddRecord(row)
+            result = True
+          End If
+
+        Next
+
+      End Using
 
     End Using
 
@@ -119,4 +122,5 @@ Module HohenwarteFunctions
     Return result
 
   End Function
+
 End Module

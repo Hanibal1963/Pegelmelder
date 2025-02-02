@@ -4,13 +4,13 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>SchlumpfSoft.Pegelmelder</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyVersion>1.2024.12.28</AssemblyVersion>
-    <FileVersion>1.2024.12.28</FileVersion>
+    <AssemblyVersion>1.2025.0202.2010</AssemblyVersion>
+    <FileVersion>1.2025.0202.2010</FileVersion>
     <AssemblyName>pm</AssemblyName>
     <OptionStrict>On</OptionStrict>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Title>Pegelmelder</Title>
-    <Version></Version>
+    <Version>1.2025.0202.2010</Version>
     <Authors>Andreas Sauer</Authors>
     <Company>SchlumpfSoft</Company>
     <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
