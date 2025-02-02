@@ -14,37 +14,6 @@ Imports SchlumpfSoft.EmailDocument
 
 Module Program
 
-#Region "Konstantendefinition"
-
-	Const URL As String = "https://group.vattenfall.com/de/energie/wasserkraft/saalekaskade/" ' URL der Website
-	Const BLEILOCHDATAFILE As String = "Bleilochpegeldaten.csv" ' Datendatei für Bleilochpegeldaten
-	Const HOHENWARTEDATAFILE As String = "Hohenwartepegeldaten.csv" ' Datendatei für Hohenwartepegeldaten
-	Const EMAILDATAFILE As String = "Emaildaten.csv" ' Datendatei für Emailempfängerdaten
-	Const EMAILDATAHEADER As String = "Vorname;Name;Emailadresse;Modus;Datensätze" ' Dateiheader für Emailempfängerdatendatei
-	Const PEGELDATAHEADER As String = "Datum;Pegelstand;Differenz" ' Dateiheader für Pegeldatendateien
-	Const DATAPATH As String = ".local/pm" ' Pfad zu den Datendateien
-	Const CONFIGPATH As String = ".config/pm" ' Pfad zur Konfigurationsdatei
-	Const CONFIGFILE As String = "pm.conf" ' Name der Konfigurationsdatei
-
-#End Region
-
-#Region "Variablendefinition"
-
-	Private NewHohenwarteData As Boolean ' neue Daten für Hohenwarthe
-	Private NewBleilochData As Boolean   ' neue Daten für Bleiloch
-	Private ConfigFilePath As String ' Pfad für Konfigurationsdateien
-	Private DataFilePath As String ' Pfad für Datendateien
-	Private Server As String ' Serveradresse
-	Private User As String ' Benutzername
-	Private Passw As String ' Passwort
-	Private Port As String  ' Serverport
-	Private Absender As String ' Emailabsender
-
-	'Public _manageserver As String	' Managerserveradresse
-	'Public _managerserverport As String ' Managerserverport
-
-#End Region
-
 	Sub Main()
 
 		SetConfigPath()  'KofigurationsPfad initialisieren
@@ -54,17 +23,17 @@ Module Program
 
 		'Konfigurationsdatei überprüfen
 		Dim conffile As String = ConfigFilePath & Path.DirectorySeparatorChar & CONFIGFILE
-		Console.WriteLine("Prüfe ob Konfigurationsdatei existiert (" & conffile & ")")
+		Console.WriteLine($"Prüfe ob Konfigurationsdatei existiert (""{conffile}"")")
 
 		'neue Konfigurationsdatei erstellen wenn sie nicht existiert
 		If Not File.Exists(conffile) Then
 
-			Console.WriteLine("Die Konfigurationsdatei " & conffile & " wurde nicht gefunden.")
+			Console.WriteLine($"Die Konfigurationsdatei (""{conffile}"") wurde nicht gefunden.")
 			Dim builder As New StringBuilder
 			Dim unused = builder.AppendLine(My.Resources.ConfigFileTemplate)
 			File.WriteAllText(conffile, builder.ToString)
-			Console.WriteLine("Es wurde eine neue leere Datei erstellt.")
-			Console.WriteLine("Bitte trage deine Daten in diese Datei ein.")
+			Console.WriteLine($"Es wurde eine neue leere Datei erstellt.")
+			Console.WriteLine($"Bitte trage deine Daten in diese Datei ein.")
 			Exit Sub
 
 		End If
@@ -75,8 +44,8 @@ Module Program
 		'Konfiguration für Server überprüfen
 		If Server = "" Or User = "" Or Passw = "" Or Port = "" Or Absender = "" Then
 
-			Console.WriteLine("Die Konfigurationsdatei " & conffile & " ist fehlerhaft.")
-			Console.WriteLine("Bitte trage die korrekten Daten in diese Datei ein.")
+			Console.WriteLine($"Die Konfigurationsdatei (""{conffile}"") ist fehlerhaft.")
+			Console.WriteLine($"Bitte trage die korrekten Daten in diese Datei ein.")
 			Exit Sub
 
 		End If
@@ -87,17 +56,17 @@ Module Program
 
 		'Prüfe ob Datenbank für Emailempfänger existiert
 		Dim emldatafile As String = ConfigFilePath & Path.DirectorySeparatorChar & EMAILDATAFILE
-		Console.WriteLine("Prüfe ob Datenbank für Emaildaten existiert (" & emldatafile & ")")
+		Console.WriteLine($"Prüfe ob Datenbank für Emaildaten existiert (""{emldatafile}"")")
 
 		'Datenbank erstellen falls sie nicht existiert
 		If Not File.Exists(emldatafile) Then
 
-			Console.WriteLine("Die Datenbank für Emaildaten (" & emldatafile & ") existiert noch nicht.")
+			Console.WriteLine($"Die Datenbank für Emaildaten (""{emldatafile }"") existiert noch nicht.")
 			Dim builder As New StringBuilder
 			Dim unused = builder.AppendLine(My.Resources.EmaildatenTemplate)
 			File.WriteAllText(emldatafile, builder.ToString)
-			Console.WriteLine("Es wurde eine neue leere Datenbank erstellt.")
-			Console.WriteLine("In diese Datenbank müssen noch die Empfänger der Emails eingetragen werden.")
+			Console.WriteLine($"Es wurde eine neue leere Datenbank erstellt.")
+			Console.WriteLine($"In diese Datenbank müssen noch die Empfänger der Emails eingetragen werden.")
 			Exit Sub
 
 		End If
@@ -114,29 +83,21 @@ Module Program
 
 		'Differenzwerte berechnen wenn neue Daten in Bleiloch vorhanden sind
 		If NewBleilochData Then
-
 			CalculateBleilochDifferences(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
-
 		End If
 
 		'Differenzwerte berechnen wenn neue Daten in Hohenwarte vorhanden sind
 		If NewHohenwarteData Then
-
 			CalculateHohenwarteDifferences(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
-
 		End If
 
 		'Überprüfen ob neue Daten vorliegen
 		If NewHohenwarteData = False And NewBleilochData = False Then
-
 			'Beenden wenn keine neuen Daten vorhanden sind
 			Exit Sub
-
 		Else
-
 			'Emails senden wenn neue Daten vorhanden sind
 			SendMails()
-
 		End If
 
 	End Sub
@@ -150,33 +111,27 @@ Module Program
 		doc.SetName(FirstName) 'Anrede einsetzen
 		doc.SetDataTable() 'Datentabelle einfügen
 
-		'Verwaltungslink einsetzen
-		'document.SetManageLink(
-		'	"http://" &
-		'	ServerVariables._manageserver & ":" &
-		'	ServerVariables._managerserverport &
-		'	"/manage?vname=" & FirstName & "&email=" & Email)
-
 		'Fusszeile komplettieren
 		doc.SetAppName(Assembly.GetExecutingAssembly().GetName.Name)
 		doc.SetAppVersion(Assembly.GetExecutingAssembly().GetName.Version.ToString)
-		doc.SetAppCopy("(Copyright © 2024 by Andreas Sauer)")
+		doc.SetAppCopy($"(Copyright © 2024 by Andreas Sauer)")
 
 		'Vorlage je nach Modus anpassen und Daten eintragen
 		Dim linetemplate As String = doc.DataLineTemplate
 		Dim bleilochdata As String = GetBleilochData(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE, Records, linetemplate)
 		Dim hohenwartedata As String = GetHohenwarteData(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE, Records, linetemplate)
+
 		Select Case Modus
 
 			Case 0  'nur Hohenwartedaten eintragen
-				doc.RemovePlaceHolder("%LEERZELLE%")
-				doc.RemovePlaceHolder("%BLEILOCHDATEN%")
+				doc.RemovePlaceHolder($"%LEERZELLE%")
+				doc.RemovePlaceHolder($"%BLEILOCHDATEN%")
 				doc.SetHohenwarteData()
 				doc.FillData(hohenwartedata)
 
 			Case 1 'nur Bleilochdaten eintragen
-				doc.RemovePlaceHolder("%HOHENWARTEDATEN%")
-				doc.RemovePlaceHolder("%LEERZELLE%")
+				doc.RemovePlaceHolder($"%HOHENWARTEDATEN%")
+				doc.RemovePlaceHolder($"%LEERZELLE%")
 				doc.SetBleilochData()
 				doc.FillData(bleilochdata)
 
@@ -188,7 +143,8 @@ Module Program
 				doc.FillData(bleilochdata)
 
 			Case Else
-				Exit Sub  'Fehler -> Ende
+				'Fehler -> Ende
+				Exit Sub
 
 		End Select
 
@@ -225,10 +181,8 @@ Module Program
 				'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
 				index = PegelDataFile.FindRecord(row.Split(";").First)
 				If index = -1 Then
-
 					PegelDataFile.AddRecord(row)
 					result = True
-
 				End If
 
 			Next
@@ -256,10 +210,8 @@ Module Program
 				'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
 				index = PegelDataFile.FindRecord(row.Split(";").First)
 				If index = -1 Then
-
 					PegelDataFile.AddRecord(row)
 					result = True
-
 				End If
 
 			Next
@@ -303,15 +255,11 @@ Module Program
 
 					'Vorzeichen für die Differenz setzen und Datensätze ersetzen
 					If differenz < 0 Then
-
 						'Differenz ist < 0
 						PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";" & Format(differenz, "000000"))
-
 					Else
-
 						'Differenz ist >= 0 oder 
 						PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+" & Format(differenz, "000000"))
-
 					End If
 
 				End If
@@ -355,15 +303,11 @@ Module Program
 
 					'Vorzeichen für die Differenz setzen und Datensätze ersetzen
 					If differenz < 0 Then
-
 						'Differenz ist < 0
 						PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";" & Format(differenz, "000000"))
-
 					Else
-
 						'Differenz ist >= 0 oder
 						PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+" & Format(differenz, "000000"))
-
 					End If
 
 				End If
@@ -506,9 +450,6 @@ Module Program
 
 				Case line.StartsWith("Absender:")
 					Absender = line.Split(":").Last
-
-					'Case line.StartsWith("ManagerServer:") : _manageserver = line.Split(":").Last
-					'Case line.StartsWith("ManagerServerPort:") : _managerserverport = line.Split(":").Last
 
 			End Select
 
