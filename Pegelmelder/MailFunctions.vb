@@ -100,7 +100,7 @@ Module MailFunctions
 
     Dim datafilepath As String = ConfigFilePath & Path.DirectorySeparatorChar & EMAILDATAFILE
     Dim DataFile As New CsvFile(datafilepath, EMAILDATAHEADER)
-    Return DataFile.Data
+    Return CsvFile.Data
 
   End Function
 End Module

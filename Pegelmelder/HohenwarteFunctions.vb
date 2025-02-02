@@ -24,7 +24,7 @@ Module HohenwarteFunctions
     Using PegelDataFile As New CsvFile(File, PEGELDATAHEADER)
 
       'Datensätze zwischenspeichern
-      tempdata = PegelDataFile.Data
+      tempdata = CsvFile.Data
 
       'Alle Datensätze durchlaufen (ausser Header)
       For index As Integer = 1 To tempdata.Count - 1
@@ -32,7 +32,7 @@ Module HohenwarteFunctions
         If index = 1 And tempdata.ElementAt(index).Split(";").Length = 2 Then
 
           'Differenz für 1. Datensatz auf 0 setzen falls noch nicht erfolgt
-          PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+000000")
+          CsvFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+000000")
 
         ElseIf tempdata.ElementAt(index).Split(";").Length = 2 Then
 
@@ -44,10 +44,10 @@ Module HohenwarteFunctions
           'Vorzeichen für die Differenz setzen und Datensätze ersetzen
           If differenz < 0 Then
             'Differenz ist < 0
-            PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";" & Format(differenz, "000000"))
+            CsvFile.ReplaceValue(index, tempdata.ElementAt(index) & ";" & Format(differenz, "000000"))
           Else
             'Differenz ist >= 0 oder 
-            PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+" & Format(differenz, "000000"))
+            CsvFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+" & Format(differenz, "000000"))
           End If
 
         End If
@@ -74,9 +74,9 @@ Module HohenwarteFunctions
       For Each row As String In WebData.GetHohenwarteData
 
         'überprüfen ob Datum bereits existiert und Datensatz eintragen falls nicht
-        index = PegelDataFile.FindRecord(row.Split(";").First)
+        index = CsvFile.FindRecord(row.Split(";").First)
         If index = -1 Then
-          PegelDataFile.AddRecord(row)
+          CsvFile.AddRecord(row)
           result = True
         End If
 
@@ -100,7 +100,7 @@ Module HohenwarteFunctions
     Dim result As String = ""
     Dim record As String '= Linetemplate
     Dim data As New CsvFile(File, PEGELDATAHEADER)
-    Dim length As Integer = data.Data.Count - 1
+    Dim length As Integer = CsvFile.Data.Count - 1
 
     'maximale Anzahl der Datensätze anpassen wenn weniger Daten vorhanden als gewünscht
     If Records > length Then
@@ -110,9 +110,9 @@ Module HohenwarteFunctions
     'Die letzten in Records gespeicherten Datensätze durchlaufen
     For index As Integer = length + 1 - Records To length
       record = Linetemplate
-      record = record.Replace("%DATUM%", data.Data.ElementAt(index).Split(";").ElementAt(0))
-      record = record.Replace("%PEGEL%", data.Data.ElementAt(index).Split(";").ElementAt(1))
-      record = record.Replace("%DIFFERENZ%", data.Data.ElementAt(index).Split(";").ElementAt(2))
+      record = record.Replace("%DATUM%", CsvFile.Data.ElementAt(index).Split(";").ElementAt(0))
+      record = record.Replace("%PEGEL%", CsvFile.Data.ElementAt(index).Split(";").ElementAt(1))
+      record = record.Replace("%DIFFERENZ%", CsvFile.Data.ElementAt(index).Split(";").ElementAt(2))
       result &= record
     Next
 
