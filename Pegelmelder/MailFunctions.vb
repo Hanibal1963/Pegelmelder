@@ -22,39 +22,39 @@ Module MailFunctions
   Friend Sub SendMail(FirstName As String, Email As String, Modus As Integer, Records As Integer)
 
     Dim doc As New Document 'Emailvorlage erstellen
-    doc.SetName(FirstName) 'Anrede einsetzen
+    Document.SetName(FirstName) 'Anrede einsetzen
     doc.SetDataTable() 'Datentabelle einfügen
 
     'Fusszeile komplettieren
-    doc.SetAppName(Assembly.GetExecutingAssembly().GetName.Name)
-    doc.SetAppVersion(Assembly.GetExecutingAssembly().GetName.Version.ToString)
-    doc.SetAppCopy($"(Copyright © 2024 by Andreas Sauer)")
+    Document.SetAppName(Assembly.GetExecutingAssembly().GetName.Name)
+    Document.SetAppVersion(Assembly.GetExecutingAssembly().GetName.Version.ToString)
+    Document.SetAppCopy($"(Copyright © 2024 by Andreas Sauer)")
 
     'Vorlage je nach Modus anpassen und Daten eintragen
-    Dim linetemplate As String = doc.DataLineTemplate
+    Dim linetemplate As String = Document.DataLineTemplate
     Dim bleilochdata As String = GetBleilochData(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE, Records, linetemplate)
     Dim hohenwartedata As String = GetHohenwarteData(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE, Records, linetemplate)
 
     Select Case Modus
 
       Case 0  'nur Hohenwartedaten eintragen
-        doc.RemovePlaceHolder($"%LEERZELLE%")
-        doc.RemovePlaceHolder($"%BLEILOCHDATEN%")
+        Document.RemovePlaceHolder($"%LEERZELLE%")
+        Document.RemovePlaceHolder($"%BLEILOCHDATEN%")
         doc.SetHohenwarteData()
-        doc.FillData(hohenwartedata)
+        Document.FillData(hohenwartedata)
 
       Case 1 'nur Bleilochdaten eintragen
-        doc.RemovePlaceHolder($"%HOHENWARTEDATEN%")
-        doc.RemovePlaceHolder($"%LEERZELLE%")
+        Document.RemovePlaceHolder($"%HOHENWARTEDATEN%")
+        Document.RemovePlaceHolder($"%LEERZELLE%")
         doc.SetBleilochData()
-        doc.FillData(bleilochdata)
+        Document.FillData(bleilochdata)
 
       Case 2 'beide Daten eintragen
         doc.SetHohenwarteData()
-        doc.FillData(hohenwartedata)
+        Document.FillData(hohenwartedata)
         doc.SetBlankCell()
         doc.SetBleilochData()
-        doc.FillData(bleilochdata)
+        Document.FillData(bleilochdata)
 
       Case Else
         'Fehler -> Ende
@@ -63,7 +63,7 @@ Module MailFunctions
     End Select
 
     Dim mail As New Client(Server, CInt(Port), User, Passw)
-    mail.Send(Absender, "pegelmelder", "Pegeldaten", Email, doc.DocumentText)
+    mail.Send(Absender, "pegelmelder", "Pegeldaten", Email, Document.DocumentText)
 
   End Sub
 
@@ -103,4 +103,5 @@ Module MailFunctions
     Return CsvFile.Data
 
   End Function
+
 End Module
