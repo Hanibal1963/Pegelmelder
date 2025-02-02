@@ -13,7 +13,7 @@
     <Version>1.2025.0202.2010</Version>
     <Authors>Andreas Sauer</Authors>
     <Company>SchlumpfSoft</Company>
-    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <Copyright>Copyright © 2022-2025 by Andreas Sauer</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
