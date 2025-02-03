@@ -1,6 +1,11 @@
 ﻿' ****************************************************************************************************************
 ' BleilochFunctions.vb
 ' © 2025 by Andreas Sauer
+'
+' Dieses Modul enthält Funktionen zur Berechnung und Verwaltung der Pegelstände für Bleiloch.
+' Es umfasst Methoden zur Berechnung der Differenzen der Pegelstände, zum Hinzufügen neuer Pegelstände
+' und zum Abrufen und Formatieren der Pegelstandsdaten.
+'
 ' ****************************************************************************************************************
 '
 

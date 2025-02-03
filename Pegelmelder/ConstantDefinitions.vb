@@ -1,6 +1,10 @@
 ﻿' ****************************************************************************************************************
 ' ConstantDefinitions.vb
 ' © 2025 by Andreas Sauer
+'
+' Dieses Modul enthält Konstanten für die URL der Datenquelle, Pfade und Dateinamen für die Speicherung der Pegeldaten,
+' sowie Konfigurationsdateien und Dateiheader für die Verarbeitung der Pegeldaten und Emailempfängerdaten.
+'
 ' ****************************************************************************************************************
 '
 
