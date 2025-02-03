@@ -1,13 +1,17 @@
 ﻿'****************************************************************************************************************
-'EmailDocument.vb
-'(c) 2022 - 2024 by Andreas Sauer
+'Document.vb
+'(c) 2022 - 2025 by Andreas Sauer
+'
+' Diese Klasse stellt Methoden und Eigenschaften zur Verfügung, um ein Dokument mit Platzhaltern zu erstellen und 
+' diese Platzhalter durch tatsächliche Daten zu ersetzen. Die Platzhalter werden durch Vorlagen aus den Ressourcen 
+' ersetzt, die in der Anwendung eingebettet sind.
+'
 '****************************************************************************************************************
 '
 
 Imports System.Text
 
 Public Class Document
-
 
 	''' <summary>
 	''' Erzeugt ein neues Dokument mit Platzhaltern
