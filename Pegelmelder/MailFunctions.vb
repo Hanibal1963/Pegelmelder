@@ -1,9 +1,13 @@
 ﻿' ****************************************************************************************************************
 ' MailFunctions.vb
 ' © 2025 by Andreas Sauer
+'
+' Dieses Modul enthält Funktionen zum Senden von E-Mails mit spezifischen Daten.
+' Es gibt Funktionen zum Laden von E-Mail-Daten aus einer CSV-Datei und zum Senden
+' von E-Mails an alle Empfänger basierend auf diesen Daten.
+'
 ' ****************************************************************************************************************
 '
-
 Imports System.IO
 Imports System.Reflection
 Imports SchlumpfSoft.CsvFileManager

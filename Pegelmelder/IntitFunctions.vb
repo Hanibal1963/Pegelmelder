@@ -1,6 +1,10 @@
 ﻿' ****************************************************************************************************************
 ' InitFunctions.vb
 ' © 2025 by Andreas Sauer
+'
+' Dieses Modul enthält Funktionen zur Initialisierung von Pfaden und zum Laden von Konfigurationsdaten.
+' Es stellt sicher, dass die notwendigen Verzeichnisse existieren und lädt die Konfiguration aus einer Datei.
+'
 ' ****************************************************************************************************************
 '
 
