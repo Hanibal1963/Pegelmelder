@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    .document
+    {
+      font-size: 14px
+    }
+
+    .table
+    {
+      border-collapse: collapse;
+      border-spacing: 0px
+    }
+
+    .celldate
+    {
+      border: 1px solid #000000;
+      width: 70px
+    }
+
+    .cellpegel
+    {
+      border: 1px solid #000000;
+      width: 100px
+    }
+
+    .celldifferenz
+    {
+      border: 1px solid #000000;
+      width: 100px
+    }
+
+    .footer
+    {
+      font-size: 10px
+    }
+  </style>
+  <title>Pegeldaten</title>
+</head>
+<body class="document">
+  <p id="Anrede">Hallo %VORNAME%,</p>
+  <p id="Emailtext">Nachfolgend sind die von dir angeforderten Pegeldaten aufgelistet.</p>
+  <!--%DATENTABELLE%-->
+  <table>
+    <tr id="Daten">
+      <!--%HOHENWARTEDATEN%-->
+      <td id="Hohenwartedaten">
+        <b>Pegeldaten Hohenwarte:</b><br />
+        <table class="table" id="Hohenwartedatentabelle">
+          <tr>
+            <td class="celldate" name="Datum">Datum</td>
+            <td class="cellpegel" name="Pegel">Pegel (mm)</td>
+            <td class="celldifferenz" name="Aenderung">Änderung zum Vortag (mm)</td>
+          </tr>
+          <!--%DATENZEILEN%-->
+          <tr>
+            <td class="celldate"><!--%DATUM%--></td>
+            <td class="cellpegel"><!--%PEGEL%--></td>
+            <td class="celldifferenz"><!--%DIFFERENZ%--></td>
+          </tr>
+        </table>
+      </td>
+      <!--%LEERZELLE%-->
+      <td id="Leerzelle" style="width: 50px"></td>
+      <!--%BLEILOCHDATEN%-->
+      <td id="Bleilochdaten">
+        <b>Pegeldaten Bleiloch:</b><br />
+        <table class="table" id="Bleilochdatentabelle">
+          <tr>
+            <td class="celldate" name="Datum">Datum</td>
+            <td class="cellpegel" name="Pegel">Pegel (mm)</td>
+            <td class="celldifferenz" name="Aenderung">Änderung zum Vortag (mm)</td>
+          </tr>
+          <!--%DATENZEILEN%-->
+          <tr>
+            <td class="celldate"><!--%DATUM%--></td>
+            <td class="cellpegel"><!--%PEGEL%--></td>
+            <td class="celldifferenz"><!--%DIFFERENZ%--></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!--<p id="Managelink"><a href="%MANGELINK%">Hier kannst du die Einstellungen für diese Email ändern.</a></p>-->
+  <p class="footer" id="footer">Diese Email wurde mit %APPLICATION% Version %VERSION% erstellt %COPYRIGHT%</p>
+</body>
+</html>

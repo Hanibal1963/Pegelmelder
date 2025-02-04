@@ -7,7 +7,6 @@
     <Version>1.2025.0202.2048</Version>
     <Company>SchlumpfSoft</Company>
     <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
