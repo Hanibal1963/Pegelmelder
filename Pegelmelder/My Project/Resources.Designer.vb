@@ -61,6 +61,33 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Prüfe ob Konfigurationsdatei existiert (&quot;{0}&quot;) ähnelt.
+        '''</summary>
+        Friend ReadOnly Property CheckingConfigFile() As String
+            Get
+                Return ResourceManager.GetString("CheckingConfigFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Prüfe ob Datenbank für Emaildaten existiert (&quot;{0}&quot;) ähnelt.
+        '''</summary>
+        Friend ReadOnly Property CheckingEmailDataFile() As String
+            Get
+                Return ResourceManager.GetString("CheckingEmailDataFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Die Konfigurationsdatei (&quot;{0}&quot;) wurde nicht gefunden. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property ConfigFileNotFound() As String
+            Get
+                Return ResourceManager.GetString("ConfigFileNotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Sucht eine lokalisierte Zeichenfolge, die #Email-Konfiguration
         '''Server:
         '''User:
@@ -76,11 +103,56 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Die Datenbank für Emaildaten (&quot;{0}&quot;) existiert noch nicht. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property EmailDataFileNotFound() As String
+            Get
+                Return ResourceManager.GetString("EmailDataFileNotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Sucht eine lokalisierte Zeichenfolge, die Vorname;Name;Emailadresse;Modus;Datensätze ähnelt.
         '''</summary>
         Friend ReadOnly Property EmaildatenTemplate() As String
             Get
                 Return ResourceManager.GetString("EmaildatenTemplate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Bitte trage deine Daten in diese Datei ein. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property InsertConfigFileData() As String
+            Get
+                Return ResourceManager.GetString("InsertConfigFileData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die In diese Datenbank müssen noch die Empfänger der Emails eingetragen werden. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property InsertEmailData() As String
+            Get
+                Return ResourceManager.GetString("InsertEmailData", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Es wurde eine neue leere Datei erstellt. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property NewConfigFileCreated() As String
+            Get
+                Return ResourceManager.GetString("NewConfigFileCreated", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Es wurde eine neue leere Datenbank erstellt. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property NewEmailDataFileCreated() As String
+            Get
+                Return ResourceManager.GetString("NewEmailDataFileCreated", resourceCulture)
             End Get
         End Property
     End Module
