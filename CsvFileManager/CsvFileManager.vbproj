@@ -7,11 +7,11 @@
     <UseApplicationFramework>False</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <OptionStrict>On</OptionStrict>
-    <Version>1.2024.12.28</Version>
+    <Version>1.2025.0208.1035</Version>
     <Authors>Andreas Sauer</Authors>
     <Company>SchlumpfSoft</Company>
     <Description>Anwendungsbibliothek zum verwalten einer CSV-Datei</Description>
-    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <Copyright>Copyright © 2024 - 2025 by Andreas Sauer</Copyright>
     <AssemblyVersion>1.2025.0202.1656</AssemblyVersion>
     <FileVersion>1.2025.0202.1656</FileVersion>
   </PropertyGroup>
