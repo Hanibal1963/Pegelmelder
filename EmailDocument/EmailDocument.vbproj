@@ -4,9 +4,9 @@
     <RootNamespace>SchlumpfSoft.EmailDocument</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <OptionStrict>On</OptionStrict>
-    <Version>1.2025.0202.2048</Version>
+    <Version>1.2025.0208.1032</Version>
     <Company>SchlumpfSoft</Company>
-    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <Copyright>Copyright © 2024 - 2025 by Andreas Sauer</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
