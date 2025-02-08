@@ -4,9 +4,9 @@
     <RootNamespace>SchlumpfSoft.MailClient</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <OptionStrict>On</OptionStrict>
-    <Version>1.2025.0202.1950</Version>
+    <Version>1.2025.0208.1033</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <Copyright>Copyright © 2024 - 2025 by Andreas Sauer</Copyright>
     <Company>SchlumpfSoft</Company>
     <Authors>Andreas Sauer</Authors>
     <Description>Anwendungsbibliothek zu Versenden von Emails.</Description>
