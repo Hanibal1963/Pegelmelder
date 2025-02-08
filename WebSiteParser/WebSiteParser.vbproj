@@ -8,7 +8,7 @@
     <Version>1.2025.0208.1026</Version>
     <Authors>Andreas Sauer</Authors>
     <Company>SchlumpfSoft</Company>
-    <Copyright>Copyright © 2024 by Andreas Sauer</Copyright>
+    <Copyright>Copyright © 2024 - 2025 by Andreas Sauer</Copyright>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
 
