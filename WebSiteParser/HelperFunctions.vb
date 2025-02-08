@@ -32,7 +32,7 @@ Class HelperFunctions
   Friend Shared Function GetDataSource(Source As String, Location As String) As List(Of String)
     'Fehlerprüfung
     If String.IsNullOrEmpty(Source) Then
-      Throw New ArgumentException($"""{NameOf(Source)}"" kann nicht NULL oder leer sein.", NameOf(Source))
+      Throw New ArgumentException(String.Format(My.Resources.NullOrEmtyMessage, NameOf(Source)))
     End If
     'Text vor Anfangstag und nach Endetag (incl. der Tags) des Datenbereiches entfenen
     Dim datasource As String = Source.Split("<div class=""" & Location & """>").Last.Split("</div>").First
