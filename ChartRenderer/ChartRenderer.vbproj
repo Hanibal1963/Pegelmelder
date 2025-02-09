@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>SchlumpfSoft.ChartRenderer</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <Title>Bibliothek zum erstellen von Diagrammbildern</Title>
+    <Version>1.2025.0209.1940</Version>
+    <Authors>Andreas Sauer</Authors>
+    <Company>SchlumpfSoft</Company>
+    <PackAsTool>False</PackAsTool>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <OptionStrict>On</OptionStrict>
+    <Copyright>Copyright © 2025 by Andreas Sauer</Copyright>
+    <Description>Bibliothek zum erstellen einer Diagrammgrafik</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="3.116.1" />
+  </ItemGroup>
+
+</Project>
