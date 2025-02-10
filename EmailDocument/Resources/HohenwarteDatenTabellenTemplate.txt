@@ -1,11 +1,14 @@
 ﻿<td id="Hohenwartedaten">
-  <b>Pegeldaten Hohenwarte:</b><br />
-    <table class="table" id="Hohenwartedatentabelle">
-      <tr>
-        <td class="celldate" name="Datum">Datum</td>
-        <td class="cellpegel" name="Pegel">Pegel (mm)</td>
-        <td class="celldifferenz" name="Aenderung">Änderung zum Vortag (mm)</td>
-      </tr>
-        %DATENZEILEN%
-    </table>
+  <b>Pegeldaten Hohenwarte:</b>
+  <br />
+  <table class="table" id="Hohenwartedatentabelle">
+    <tr>
+      <td class="celldate" name="Datum">Datum</td>
+      <td class="cellpegel" name="Pegel">Pegel (mm)</td>
+      <td class="celldifferenz" name="Aenderung">Änderung zum Vortag (mm)</td>
+    </tr>
+    %DATENZEILEN%
+  </table>
+  <br />
+  %HOHENWARTEIMAGE%
 </td>
