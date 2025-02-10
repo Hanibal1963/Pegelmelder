@@ -74,6 +74,7 @@ Das Projekt verwendet mehrere CSV-Dateien zur Speicherung von Daten:
 
 - Verwaltungstool für die Emaildaten
 - Verwaltungstool für die Emailserverdaten
+- Einfügen einer Diagrammgrafik unterhalb der Datentabellen
 
 ### Lizenz
 
