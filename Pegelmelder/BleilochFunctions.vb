@@ -128,4 +128,9 @@ Module BleilochFunctions
 
   End Function
 
+  Friend Function GetBleilochImageCode(File As String, Records As Integer) As String
+    Dim result As String = "Bleilochdiagramm"
+    Return result
+  End Function
+
 End Module
