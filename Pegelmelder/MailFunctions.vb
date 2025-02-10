@@ -42,23 +42,32 @@ Module MailFunctions
     Select Case Modus
 
       Case 0  'nur Hohenwartedaten eintragen
+'Leerzellen und Tabelle für Bleilochdaten entfernen 
         Document.RemovePlaceHolder($"%LEERZELLE%")
         Document.RemovePlaceHolder($"%BLEILOCHDATEN%")
+'
         doc.SetHohenwarteData()
         Document.FillData(hohenwartedata)
+'TODO: Hier Grafik einfügen 
 
       Case 1 'nur Bleilochdaten eintragen
-        Document.RemovePlaceHolder($"%HOHENWARTEDATEN%")
+  'Leerzellen und Tabelle für Hohenwartedaten entfernen 
+ Document.RemovePlaceHolder($"%HOHENWARTEDATEN%")
         Document.RemovePlaceHolder($"%LEERZELLE%")
+'
         doc.SetBleilochData()
         Document.FillData(bleilochdata)
+'TODO: Hier Grafik einfügen 
 
       Case 2 'beide Daten eintragen
         doc.SetHohenwarteData()
         Document.FillData(hohenwartedata)
+'TODO: Hier Grafik einfügen 
+
         doc.SetBlankCell()
         doc.SetBleilochData()
         Document.FillData(bleilochdata)
+'TODO: Hier Grafik einfügen 
 
       Case Else
         'Fehler -> Ende
