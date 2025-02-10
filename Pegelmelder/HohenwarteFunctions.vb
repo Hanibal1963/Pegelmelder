@@ -128,4 +128,9 @@ Module HohenwarteFunctions
 
   End Function
 
+  Friend Function GetHohenwarteImageCode(File As String, Records As Integer) As String
+    Dim result As String = "Hohenwartediagramm"
+    Return result
+  End Function
+
 End Module
