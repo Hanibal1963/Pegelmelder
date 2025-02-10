@@ -37,8 +37,10 @@ Module MailFunctions
 
     'Vorlage je nach Modus anpassen und Daten eintragen
     Dim linetemplate As String = Document.DataLineTemplate
-    Dim bleilochdata As String = GetBleilochData(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE, Records, linetemplate)
-    Dim hohenwartedata As String = GetHohenwarteData(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE, Records, linetemplate)
+    Dim bleilochdata As String = BleilochFunctions.GetBleilochData(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE, Records, linetemplate)
+    Dim bleilochimagecode As String = BleilochFunctions.GetBleilochImageCode(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE, Records)
+    Dim hohenwartedata As String = HohenwarteFunctions.GetHohenwarteData(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE, Records, linetemplate)
+    Dim hohenwateimagecode As String = HohenwarteFunctions.GetHohenwarteImageCode(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE, Records)
 
     Select Case Modus
 
@@ -49,7 +51,7 @@ Module MailFunctions
         '
         doc.SetHohenwarteData()
         Document.FillData(hohenwartedata)
-        Document.InsertHohenwarteImage("Hohenwartegrafik")
+        Document.InsertHohenwarteImage(hohenwateimagecode)
 
       Case 1 'nur Bleilochdaten eintragen
         'Leerzellen und Tabelle für Hohenwartedaten entfernen 
@@ -58,17 +60,17 @@ Module MailFunctions
         '
         doc.SetBleilochData()
         Document.FillData(bleilochdata)
-        Document.InsertBleilochImage("Bleilochgrafik")
+        Document.InsertBleilochImage(bleilochimagecode)
 
       Case 2 'beide Daten eintragen
         doc.SetHohenwarteData()
         Document.FillData(hohenwartedata)
-        Document.InsertHohenwarteImage("Hohenwartegrafik")
+        Document.InsertHohenwarteImage(hohenwateimagecode)
 
         doc.SetBlankCell()
         doc.SetBleilochData()
         Document.FillData(bleilochdata)
-        Document.InsertBleilochImage("Bleilochgrafik")
+        Document.InsertBleilochImage(bleilochimagecode)
 
       Case Else
         'Fehler -> Ende
