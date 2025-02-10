@@ -8,6 +8,7 @@
 '
 ' ****************************************************************************************************************
 '
+
 Imports System.IO
 Imports System.Reflection
 Imports SchlumpfSoft.CsvFileManager
@@ -42,32 +43,32 @@ Module MailFunctions
     Select Case Modus
 
       Case 0  'nur Hohenwartedaten eintragen
-'Leerzellen und Tabelle für Bleilochdaten entfernen 
+        'Leerzellen und Tabelle für Bleilochdaten entfernen 
         Document.RemovePlaceHolder($"%LEERZELLE%")
         Document.RemovePlaceHolder($"%BLEILOCHDATEN%")
-'
+        '
         doc.SetHohenwarteData()
         Document.FillData(hohenwartedata)
-'TODO: Hier Grafik einfügen 
+        Document.InsertHohenwarteImage("Hohenwartegrafik")
 
       Case 1 'nur Bleilochdaten eintragen
-  'Leerzellen und Tabelle für Hohenwartedaten entfernen 
- Document.RemovePlaceHolder($"%HOHENWARTEDATEN%")
+        'Leerzellen und Tabelle für Hohenwartedaten entfernen 
+        Document.RemovePlaceHolder($"%HOHENWARTEDATEN%")
         Document.RemovePlaceHolder($"%LEERZELLE%")
-'
+        '
         doc.SetBleilochData()
         Document.FillData(bleilochdata)
-'TODO: Hier Grafik einfügen 
+        Document.InsertBleilochImage("Bleilochgrafik")
 
       Case 2 'beide Daten eintragen
         doc.SetHohenwarteData()
         Document.FillData(hohenwartedata)
-'TODO: Hier Grafik einfügen 
+        Document.InsertHohenwarteImage("Hohenwartegrafik")
 
         doc.SetBlankCell()
         doc.SetBleilochData()
         Document.FillData(bleilochdata)
-'TODO: Hier Grafik einfügen 
+        Document.InsertBleilochImage("Bleilochgrafik")
 
       Case Else
         'Fehler -> Ende
