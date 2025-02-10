@@ -11,6 +11,7 @@
 
 Imports SchlumpfSoft.CsvFileManager
 Imports SchlumpfSoft.WebSiteParser
+Imports SchlumpfSoft.ChartRenderer
 
 Module HohenwarteFunctions
 
@@ -109,6 +110,9 @@ Module HohenwarteFunctions
     Dim record As String '= Linetemplate
     Dim data As New CsvFile(File, PEGELDATAHEADER)
     Dim length As Integer = CsvFile.Data.Count - 1
+    Dim datum As String
+    Dim pegel As String
+    Dim diff As String
 
     'maximale Anzahl der Datensätze anpassen wenn weniger Daten vorhanden als gewünscht
     If Records > length Then
@@ -118,9 +122,12 @@ Module HohenwarteFunctions
     'Die letzten in Records gespeicherten Datensätze durchlaufen
     For index As Integer = length + 1 - Records To length
       record = Linetemplate
-      record = record.Replace("%DATUM%", CsvFile.Data.ElementAt(index).Split(";").ElementAt(0))
-      record = record.Replace("%PEGEL%", CsvFile.Data.ElementAt(index).Split(";").ElementAt(1))
-      record = record.Replace("%DIFFERENZ%", CsvFile.Data.ElementAt(index).Split(";").ElementAt(2))
+      datum = CsvFile.Data.ElementAt(index).Split(";").ElementAt(0)
+      pegel = CsvFile.Data.ElementAt(index).Split(";").ElementAt(1)
+      diff = CsvFile.Data.ElementAt(index).Split(";").ElementAt(2)
+      record = record.Replace("%DATUM%", datum)
+      record = record.Replace("%PEGEL%", pegel)
+      record = record.Replace("%DIFFERENZ%", diff)
       result &= record
     Next
 
@@ -129,8 +136,32 @@ Module HohenwarteFunctions
   End Function
 
   Friend Function GetHohenwarteImageCode(File As String, Records As Integer) As String
-    Dim result As String = "Hohenwartediagramm"
-    Return result
+
+    Dim imagedata As New List(Of String)
+    Dim data As New CsvFile(File, PEGELDATAHEADER)
+    Dim length As Integer = CsvFile.Data.Count - 1
+    Dim datum As String
+    Dim pegel As String
+
+    'maximale Anzahl der Datensätze anpassen wenn weniger Daten vorhanden als gewünscht
+    If Records > length Then
+      Records = length
+    End If
+
+    'Die letzten in Records gespeicherten Datensätze durchlaufen
+    For index As Integer = length + 1 - Records To length
+      datum = CsvFile.Data.ElementAt(index).Split(";").ElementAt(0)
+      pegel = CsvFile.Data.ElementAt(index).Split(";").ElementAt(1)
+      imagedata.Add($"{datum};{pegel}")
+    Next
+
+    Dim datalines As String() = imagedata.ToArray
+    Dim renderer As New ImageRenderer(datalines) With
+      {.Height = 300, .Width = 300, .Padding = 0, .BackColor = SkiaSharp.SKColors.Gray, .Caption = $"Hohenwarte"}
+    Dim imagecode = renderer.GenerateImageTag
+
+    Return imagecode
+
   End Function
 
 End Module
