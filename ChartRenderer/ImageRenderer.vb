@@ -1,6 +1,6 @@
-' ****************************************************************************************************************
+ï»¿' ****************************************************************************************************************
 ' ImageRenderer.vb
-' © 2025 by Andreas Sauer
+' (c) 2025 by Andreas Sauer
 ' ****************************************************************************************************************
 '
 
@@ -38,29 +38,29 @@ Public Class ImageRenderer
   Private xScale As Single
   Private yScale As Single
 
-  Public Property Width As Integer = 800
-  Public Property Height As Integer = 500
-  Public Property LineColor As SKColor = SKColors.Red
-  Public Property AxisColor As SKColor = SKColors.Black
-  Public Property GridColor As SKColor = SKColors.LightGray
-  Public Property PointColor As SKColor = SKColors.Blue
-  Public Property TextColor As SKColor = SKColors.Black
-  Public Property BackColor As SKColor = SKColors.White
-  Public Property AltText As String = "Diagramm"
-  Public Property Caption As String = ""
-  Public Property Padding As Integer = 60
-  Public Property TextSize As Single = 14
+  Public Property Width As Integer = 800 'Breite der Bitmap
+  Public Property Height As Integer = 500  'Hï¿½he der Bimap
+  Public Property LineColor As SKColor = SKColors.Red 'Farbe der Datenlinien
+  Public Property AxisColor As SKColor = SKColors.Black 'Farbe der Koordinatenlinien
+  Public Property GridColor As SKColor = SKColors.LightGray  'Farbe der Gitternetzlinien
+  Public Property PointColor As SKColor = SKColors.Blue 'Farbe der Datenpunkte
+  Public Property TextColor As SKColor = SKColors.Black 'Farbe des Textes
+  Public Property BackColor As SKColor = SKColors.White 'Hintegrundfarbe
+  Public Property AltText As String = "Diagramm" 'Alternativtext des Bildes
+  Public Property Caption As String = ""  'Beschriftungstext unterhalb des Diagramms
+  Public Property Padding As Integer = 0 'Breite der Rï¿½nder um das Diagramm einschlieï¿½lich des Beschriftungstextes
+  Public Property TextSize As Single = 12  'Schriftgrï¿½ï¿½e
 
   Public Sub New(dataLines As String())
     Me.ParseDataLines(dataLines)
   End Sub
 
   Public Function GenerateImageTag() As String
-    Me.InitializePaints() ' Stifte für Achsen, Gitternetzlinien, Linien und Punkte 
-    Me.CalculateLegendHeight() ' Legendenhöhe berechnen
-    Me.AdjustPadding()  ' Gesamtes Padding anpassen, um Platz für die Beschriftung unten zu lassen
-    Me.CalculateYRange() ' Wertebereiche für Y-Achse
-    Me.SortUniqueDates() ' Sortiere Datumswerte für die X-Achse
+    Me.InitializePaints() ' Stifte fï¿½r Achsen, Gitternetzlinien, Linien und Punkte 
+    Me.CalculateCaptionHeight() ' Beschriftungshï¿½he berechnen
+    Me.AdjustPadding()  ' Gesamtes Padding anpassen
+    Me.CalculateYRange() ' Wertebereiche fï¿½r Y-Achse
+    Me.SortUniqueDates() ' Sortiere Datumswerte fï¿½r die X-Achse
     Me.CalculateMaxLabelWidth() ' Maximale Breite der Y-Achsen-Beschriftung berechnen
     Me.CalculateScales() ' Skalierung berechnen
     Me.InitializeCanvas() ' Bitmap erstellen
@@ -72,7 +72,7 @@ Public Class ImageRenderer
     Me.DrawDataPoints() ' Datenpunkte zeichnen
     Me.DrawCaptionText() ' Beschriftungstext zeichnen
     Me.EncodeImageToBase64() ' Bild als PNG in Base64 kodieren
-    Return $"<img src='data:image/png;base64,{Me.base64Image}' alt='{Me.AltText}'/>"  ' Das img-Tag zurückgeben
+    Return $"<img src='data:image/png;base64,{Me.base64Image}' alt='{Me.AltText}'/>"  ' Das img-Tag zurï¿½ckgeben
   End Function
 
   Private Sub EncodeImageToBase64()
@@ -143,19 +143,19 @@ Public Class ImageRenderer
   End Sub
 
   Private Sub InitializeCanvas()
-    Me.bitmap = New SKBitmap(Me.Width, Me.Height + Me.legendHeight)
+    Me.bitmap = New SKBitmap(Me.Width, Me.Height + Me.legendHeight + Me.Padding)
     Me.canvas = New SKCanvas(Me.bitmap)
     Me.canvas.Clear(Me.BackColor)
   End Sub
 
   Private Sub CalculateScales()
-    Me.xScale = CSng((Me.Width - (2 * Me.adjustedPadding) - Me.labelOffset) / (Me.xMax - Me.xMin))
-    Me.yScale = CSng((Me.Height - (2 * Me.adjustedPadding) - Me.legendHeight) / (Me.yMax - Me.yMin))
+    Me.xScale = CSng((Me.Width - (2 * Me.Padding) - Me.labelOffset) / (Me.xMax - Me.xMin))
+    Me.yScale = CSng((Me.Height - (2 * Me.Padding) - Me.legendHeight) / (Me.yMax - Me.yMin))
   End Sub
 
   Private Sub CalculateMaxLabelWidth()
     Me.maxLabelWidth = Me.dataset.Max(Function(d) Me.textPaint.MeasureText(d.Item2.ToString()))
-    Me.labelOffset = CInt(Math.Ceiling(Me.maxLabelWidth)) + 10 ' Sicherstellen, dass genügend Platz bleibt
+    Me.labelOffset = CInt(Math.Ceiling(Me.maxLabelWidth)) + 10
   End Sub
 
   Private Sub SortUniqueDates()
@@ -168,25 +168,24 @@ Public Class ImageRenderer
     Me.yMin = Me.dataset.Min(Function(d) d.Item2)
     Me.yMax = Me.dataset.Max(Function(d) d.Item2)
     Me.yRange = Me.yMax - Me.yMin
-    If Me.yRange = 0 Then Me.yRange = 10 ' Vermeidung einer Division durch Null
+    If Me.yRange = 0 Then Me.yRange = 10
     Me.yMin -= CInt(Me.yRange * 0.1)
     Me.yMax += CInt(Me.yRange * 0.1)
   End Sub
 
   Private Sub AdjustPadding()
-    Me.adjustedPadding = Math.Max(Me.Padding, Me.legendHeight + 20)
+    Me.adjustedPadding = Me.Padding
   End Sub
 
-  Private Sub CalculateLegendHeight()
-    'Me.textPaint = New SKPaint With {.Color = Me.TextColor, .TextSize = Me.TextSize}
+  Private Sub CalculateCaptionHeight()
     Me.legendHeight = If(String.IsNullOrEmpty(Me.Caption), 0, CInt(Me.textPaint.TextSize + 10))
   End Sub
 
   Private Sub ParseDataLines(dataLines() As String)
     Try
-      For i As Integer = 0 To dataLines.Length - 1 ' Alle Zeilen auswerten
+      For i As Integer = 0 To dataLines.Length - 1
         Dim parts = dataLines(i).Split(";"c)
-        If parts.Length < 2 Then Continue For ' Sicherstellen, dass genug Felder vorhanden sind
+        If parts.Length < 2 Then Continue For
 
         Dim datum As Date
         Dim wert As Integer
