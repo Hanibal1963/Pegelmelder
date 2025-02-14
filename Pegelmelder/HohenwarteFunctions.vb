@@ -1,9 +1,9 @@
-Ôªø' ****************************************************************************************************************
+' ****************************************************************************************************************
 ' HohenwarteFunctions.vb
-' ¬© 2025 by Andreas Sauer
+' © 2025 by Andreas Sauer
 ' 
-' Dieses Modul enth√§lt Funktionen zur Berechnung und Verwaltung der Pegelst√§nde f√ºr Hohenwarte.
-' Es umfasst Methoden zur Berechnung der Differenzen, zum Hinzuf√ºgen neuer Pegelst√§nde und zum Abrufen
+' Dieses Modul enth‰lt Funktionen zur Berechnung und Verwaltung der Pegelst‰nde f¸r Hohenwarte.
+' Es umfasst Methoden zur Berechnung der Differenzen, zum Hinzuf¸gen neuer Pegelst‰nde und zum Abrufen
 ' und Formatieren der Pegelstandsdaten aus einer CSV-Datei.
 '
 ' ****************************************************************************************************************
@@ -16,9 +16,9 @@ Imports SchlumpfSoft.ChartRenderer
 Module HohenwarteFunctions
 
   ''' <summary>
-  ''' Berechnet die Differenzen der Pegelst√§nde f√ºr Hohenwarte und aktualisiert die CSV-Datei.
+  ''' Berechnet die Differenzen der Pegelst‰nde f¸r Hohenwarte und aktualisiert die CSV-Datei.
   ''' </summary>
-  ''' <param name="File">Der Pfad zur CSV-Datei, die die Hohenwarte-Pegeldaten enth√§lt.</param>
+  ''' <param name="File">Der Pfad zur CSV-Datei, die die Hohenwarte-Pegeldaten enth‰lt.</param>
   Friend Sub CalculateHohenwarteDifferences(File As String)
 
     Dim tempdata As List(Of String)
@@ -26,28 +26,28 @@ Module HohenwarteFunctions
     Dim newpegel As Integer
     Dim differenz As Integer
 
-    'Differenzen f√ºr Hohenwarte berechnen
+    'Differenzen f¸r Hohenwarte berechnen
     Using PegelDataFile As New CsvFile(File, PEGELDATAHEADER)
 
-      'Datens√§tze zwischenspeichern
+      'Datens‰tze zwischenspeichern
       tempdata = CsvFile.Data
 
-      'Alle Datens√§tze durchlaufen (ausser Header)
+      'Alle Datens‰tze durchlaufen (ausser Header)
       For index As Integer = 1 To tempdata.Count - 1
 
         If index = 1 And tempdata.ElementAt(index).Split(";").Length = 2 Then
 
-          'Differenz f√ºr 1. Datensatz auf 0 setzen falls noch nicht erfolgt
+          'Differenz f¸r 1. Datensatz auf 0 setzen falls noch nicht erfolgt
           CsvFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+000000")
 
         ElseIf tempdata.ElementAt(index).Split(";").Length = 2 Then
 
-          'Differenz f√ºr alle anderen Datens√§tze berechnen falls noch nicht erfolgt
+          'Differenz f¸r alle anderen Datens‰tze berechnen falls noch nicht erfolgt
           oldpegel = CInt(tempdata.ElementAt(index - 1).Split(";").ElementAt(1))
           newpegel = CInt(tempdata.ElementAt(index).Split(";").ElementAt(1))
           differenz = newpegel - oldpegel
 
-          'Vorzeichen f√ºr die Differenz setzen und Datens√§tze ersetzen
+          'Vorzeichen f¸r die Differenz setzen und Datens‰tze ersetzen
           If differenz < 0 Then
             'Differenz ist < 0
             CsvFile.ReplaceValue(index, tempdata.ElementAt(index) & ";" & Format(differenz, "000000"))
@@ -65,22 +65,22 @@ Module HohenwarteFunctions
   End Sub
 
   ''' <summary>
-  ''' F√ºgt einen neuen Datensatz in die Hohenwartepegeldaten ein
+  ''' F¸gt einen neuen Datensatz in die Hohenwartepegeldaten ein
   ''' falls noch nicht vorhanden.
   ''' </summary>
-  ''' <param name="File">Datendatei f√ºr Hohenwartedaten</param>
+  ''' <param name="File">Datendatei f¸r Hohenwartedaten</param>
   Friend Function AddHohenwartePegel(File As String) As Boolean
 
     Dim result As Boolean = False
     Using PegelDataFile As New CsvFile(File, PEGELDATAHEADER)
 
-      'alle Datens√§tze der Webdaten durchsuchen
+      'alle Datens‰tze der Webdaten durchsuchen
       Using WebData As New Parser(URL)
 
         Dim index As Integer
         For Each row As String In Parser.GetHohenwarteData
 
-          '√ºberpr√ºfen ob Datum bereits existiert und Datensatz eintragen falls nicht
+          '¸berpr¸fen ob Datum bereits existiert und Datensatz eintragen falls nicht
           index = CsvFile.FindRecord(row.Split(";").First)
           If index = -1 Then
             CsvFile.AddRecord(row)
@@ -98,12 +98,12 @@ Module HohenwarteFunctions
   End Function
 
   ''' <summary>
-  ''' Ruft die Hohenwarte-Daten aus der angegebenen Datei ab und formatiert sie gem√§√ü der angegebenen Vorlage.
+  ''' Ruft die Hohenwarte-Daten aus der angegebenen Datei ab und formatiert sie gem‰ﬂ der angegebenen Vorlage.
   ''' </summary>
-  ''' <param name="File">Der Pfad zur Datei, die die Hohenwarte-Daten enth√§lt.</param>
-  ''' <param name="Records">Die Anzahl der Datens√§tze, die abgerufen werden sollen.</param>
-  ''' <param name="Linetemplate">Die Vorlage, die zum Formatieren der Datens√§tze verwendet wird.</param>
-  ''' <returns>Eine formatierte Zeichenfolge, die die abgerufenen Hohenwarte-Daten enth√§lt.</returns>
+  ''' <param name="File">Der Pfad zur Datei, die die Hohenwarte-Daten enth‰lt.</param>
+  ''' <param name="Records">Die Anzahl der Datens‰tze, die abgerufen werden sollen.</param>
+  ''' <param name="Linetemplate">Die Vorlage, die zum Formatieren der Datens‰tze verwendet wird.</param>
+  ''' <returns>Eine formatierte Zeichenfolge, die die abgerufenen Hohenwarte-Daten enth‰lt.</returns>
   Friend Function GetHohenwarteData(File As String, Records As Integer, Linetemplate As String) As String
 
     Dim result As String = ""
@@ -114,12 +114,12 @@ Module HohenwarteFunctions
     Dim pegel As String
     Dim diff As String
 
-    'maximale Anzahl der Datens√§tze anpassen wenn weniger Daten vorhanden als gew√ºnscht
+    'maximale Anzahl der Datens‰tze anpassen wenn weniger Daten vorhanden als gew¸nscht
     If Records > length Then
       Records = length
     End If
 
-    'Die letzten in Records gespeicherten Datens√§tze durchlaufen
+    'Die letzten in Records gespeicherten Datens‰tze durchlaufen
     For index As Integer = length + 1 - Records To length
       record = Linetemplate
       datum = CsvFile.Data.ElementAt(index).Split(";").ElementAt(0)
@@ -143,12 +143,12 @@ Module HohenwarteFunctions
     Dim datum As String
     Dim pegel As String
 
-    'maximale Anzahl der Datens√§tze anpassen wenn weniger Daten vorhanden als gew√ºnscht
+    'maximale Anzahl der Datens‰tze anpassen wenn weniger Daten vorhanden als gew¸nscht
     If Records > length Then
       Records = length
     End If
 
-    'Die letzten in Records gespeicherten Datens√§tze durchlaufen
+    'Die letzten in Records gespeicherten Datens‰tze durchlaufen
     For index As Integer = length + 1 - Records To length
       datum = CsvFile.Data.ElementAt(index).Split(";").ElementAt(0)
       pegel = CsvFile.Data.ElementAt(index).Split(";").ElementAt(1)
@@ -157,7 +157,7 @@ Module HohenwarteFunctions
 
     Dim datalines As String() = imagedata.ToArray
     Dim renderer As New ImageRenderer(datalines) With
-      {.Height = 300, .Width = 300, .Padding = 0, .BackColor = SkiaSharp.SKColors.Gray, .Caption = $"Hohenwarte"}
+      {.Height = 200, .Width = 300, .Padding = 10, .BackColor = SkiaSharp.SKColors.Gray}
     Dim imagecode = renderer.GenerateImageTag
 
     Return imagecode
