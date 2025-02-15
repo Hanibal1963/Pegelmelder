@@ -12,6 +12,9 @@
     <OptionStrict>On</OptionStrict>
     <Copyright>Copyright © 2025 by Andreas Sauer</Copyright>
     <Description>Bibliothek zum erstellen einer Diagrammgrafik</Description>
+    <PublishDocumentationFile>False</PublishDocumentationFile>
+    <ImportedNamespaces>SkiaSharp=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,ChartRenderer=True</ImportedNamespaces>
+    <NuGetAuditMode>all</NuGetAuditMode>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,10 +23,17 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DebugType>none</DebugType>
+    <DefineTrace>False</DefineTrace>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="3.116.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="SkiaSharp" />
   </ItemGroup>
 
 </Project>

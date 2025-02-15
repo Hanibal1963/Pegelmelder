@@ -14,14 +14,22 @@
     <Authors>Andreas Sauer</Authors>
     <Company>SchlumpfSoft</Company>
     <Copyright>Copyright © 2022-2025 by Andreas Sauer</Copyright>
+    <PublishDocumentationFile>False</PublishDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DefineDebug>True</DefineDebug>
+    <DefineTrace>True</DefineTrace>
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DefineTrace>False</DefineTrace>
+    <DebugType>none</DebugType>
+    <DefineDebug>False</DefineDebug>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
   <ItemGroup>

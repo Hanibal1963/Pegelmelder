@@ -11,6 +11,7 @@
     <Authors>Andreas Sauer</Authors>
     <Description>Anwendungsbibliothek zu Versenden von Emails.</Description>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <PublishDocumentationFile>False</PublishDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,6 +20,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>none</DebugType>
+    <DefineTrace>False</DefineTrace>
   </PropertyGroup>
 
 </Project>

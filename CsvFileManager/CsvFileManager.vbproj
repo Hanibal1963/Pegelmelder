@@ -14,6 +14,7 @@
     <Copyright>Copyright © 2024 - 2025 by Andreas Sauer</Copyright>
     <AssemblyVersion>1.2025.0202.1656</AssemblyVersion>
     <FileVersion>1.2025.0202.1656</FileVersion>
+    <PublishDocumentationFile>False</PublishDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,6 +23,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>none</DebugType>
+    <DefineTrace>False</DefineTrace>
   </PropertyGroup>
 
 </Project>

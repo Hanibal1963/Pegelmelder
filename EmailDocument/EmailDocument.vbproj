@@ -7,6 +7,8 @@
     <Version>1.2025.0208.1032</Version>
     <Company>SchlumpfSoft</Company>
     <Copyright>Copyright © 2024 - 2025 by Andreas Sauer</Copyright>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PublishDocumentationFile>False</PublishDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,6 +17,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>none</DebugType>
+    <DefineTrace>False</DefineTrace>
   </PropertyGroup>
 
   <ItemGroup>
