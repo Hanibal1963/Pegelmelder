@@ -12,31 +12,10 @@ Public Class ImageRenderer
 
   Private ReadOnly dataset As New List(Of Tuple(Of Date, Integer))()
   Private ReadOnly uniqueDates As New SortedSet(Of Date)()
-  Private dateList As New List(Of Date)
-
-  Private bitmap As SKBitmap
+  Private bitmap As New SKBitmap
+  Private drawRect As New SKRect
   Private canvas As SKCanvas
-
-  Private axisPaint As SKPaint
-  Private gridPaint As SKPaint
-  Private linePaint As SKPaint
-  Private pointPaint As SKPaint
-  Private textPaint As SKPaint
-
   Private base64Image As String
-  Private legendHeight As Integer
-  Private maxLabelWidth As Single
-  Private labelOffset As Integer
-  Private adjustedPadding As Integer
-  Private x0 As Integer
-  Private y0 As Integer
-  Private yMin As Integer
-  Private yMax As Integer
-  Private xMin As Integer
-  Private xMax As Integer
-  Private yRange As Integer
-  Private xScale As Single
-  Private yScale As Single
 
   Public Property Width As Integer = 800 'Breite der Bitmap
   Public Property Height As Integer = 500  'H�he der Bimap
@@ -56,24 +35,203 @@ Public Class ImageRenderer
   End Sub
 
   Public Function GenerateImageTag() As String
-    Me.InitializePaints() ' Stifte f�r Achsen, Gitternetzlinien, Linien und Punkte 
-    Me.CalculateCaptionHeight() ' Beschriftungsh�he berechnen
-    Me.AdjustPadding()  ' Gesamtes Padding anpassen
-    Me.CalculateYRange() ' Wertebereiche f�r Y-Achse
-    Me.SortUniqueDates() ' Sortiere Datumswerte f�r die X-Achse
-    Me.CalculateMaxLabelWidth() ' Maximale Breite der Y-Achsen-Beschriftung berechnen
-    Me.CalculateScales() ' Skalierung berechnen
-    Me.InitializeCanvas() ' Bitmap erstellen
-    Me.SetAxisCoordinates() ' Ursprungspunkt berechnen
-    Me.DrawAxes() ' Achsen zeichnen
-    Me.DrawXAxisLabels() ' X-Achse beschriften
-    Me.DrawYAxisLabels() ' Y-Achse beschriften
-    Me.DrawDataLines() ' Datenlinien zeichnen
-    Me.DrawDataPoints() ' Datenpunkte zeichnen
-    Me.DrawCaptionText() ' Beschriftungstext zeichnen
+    Me.CreateBitmap() ' Erstelle die Bitmap mit den angegebenen Abmessungen
+    Me.CreateDrawRect() ' Erstelle die Zeichenfl�che unter Ber�cksichtigung des Paddings
+    Me.DrawAxes() ' Zeicnnet die Achsen des Koordinatensystems
+    Me.DrawYAxisLabels() ' Zeichnet die Beschriftung der y-Achse
+    Me.DrawXAxisLabels() ' Zeichnet die Beschriftung der x-Achse
+    Me.DrawDataLines() ' Zeichnet die Linien zwischen den Datenpunkten
+    Me.DrawDataPoints() ' Zeichnet die Datenpunkte
+    Me.DrawCaption() ' Zeichnet die Beschriftung unterhalb der x-Achse
     Me.EncodeImageToBase64() ' Bild als PNG in Base64 kodieren
     Return $"<img src='data:image/png;base64,{Me.base64Image}' alt='{Me.AltText}'/>"  ' Das img-Tag zur�ckgeben
   End Function
+
+  Private Sub DrawDataLines()
+    Using paint As New SKPaint()
+      paint.Color = Me.LineColor
+      paint.IsAntialias = True
+      paint.StrokeWidth = 2
+
+      ' Bestimme den maximalen und minimalen Wert im Datensatz
+      Dim minValue As Integer = Me.dataset.Min(Function(t) t.Item2)
+      Dim maxValue As Integer = Me.dataset.Max(Function(t) t.Item2)
+
+      ' Zeichne die Linien zwischen den Datenpunkten
+      For i As Integer = 0 To Me.dataset.Count - 2
+        Dim x1 As Single = CSng(Me.drawRect.Left + (Me.drawRect.Width * (Me.dataset(i).Item1 - Me.uniqueDates.Min).TotalDays / (Me.uniqueDates.Max - Me.uniqueDates.Min).TotalDays))
+        Dim y1 As Single = CSng(Me.drawRect.Bottom - ((Me.dataset(i).Item2 - minValue) / (maxValue - minValue) * Me.drawRect.Height))
+        Dim x2 As Single = CSng(Me.drawRect.Left + (Me.drawRect.Width * (Me.dataset(i + 1).Item1 - Me.uniqueDates.Min).TotalDays / (Me.uniqueDates.Max - Me.uniqueDates.Min).TotalDays))
+        Dim y2 As Single = CSng(Me.drawRect.Bottom - ((Me.dataset(i + 1).Item2 - minValue) / (maxValue - minValue) * Me.drawRect.Height))
+
+        Me.canvas.DrawLine(x1, y1, x2, y2, paint)
+      Next
+    End Using
+  End Sub
+
+  Private Sub DrawDataPoints()
+    Using paint As New SKPaint()
+      paint.Color = Me.PointColor
+      paint.IsAntialias = True
+      paint.Style = SKPaintStyle.Fill
+
+      ' Bestimme den maximalen und minimalen Wert im Datensatz
+      Dim minValue As Integer = Me.dataset.Min(Function(t) t.Item2)
+      Dim maxValue As Integer = Me.dataset.Max(Function(t) t.Item2)
+
+      ' Zeichne jeden Datenpunkt
+      For Each dataPoint As Tuple(Of Date, Integer) In Me.dataset
+        Dim x As Single = CSng(Me.drawRect.Left + (Me.drawRect.Width * (dataPoint.Item1 - Me.uniqueDates.Min).TotalDays / (Me.uniqueDates.Max - Me.uniqueDates.Min).TotalDays))
+        Dim y As Single = CSng(Me.drawRect.Bottom - ((dataPoint.Item2 - minValue) / (maxValue - minValue) * Me.drawRect.Height))
+
+        Me.canvas.DrawCircle(x, y, 3, paint)
+      Next
+    End Using
+  End Sub
+
+  Private Function CalculateTextHeight() As Single
+    Using paint As New SKPaint()
+      paint.TextSize = Me.TextSize
+      paint.IsAntialias = True
+
+      ' Berechne die Textmetriken
+      Dim metrics As SKFontMetrics = paint.FontMetrics
+      ' Die H�he des Textes ist der Abstand von der h�chsten zur tiefsten Linie
+      Dim textHeight As Single = metrics.Descent - metrics.Ascent
+      Return textHeight
+    End Using
+  End Function
+
+  Private Sub DrawCaption()
+    If String.IsNullOrEmpty(Me.Caption) Then Return
+
+    Using paint As New SKPaint()
+      paint.Color = Me.TextColor
+      paint.TextSize = Me.TextSize
+      paint.IsAntialias = True
+
+      Dim x As Single = Me.drawRect.Left
+      Dim y As Single = Me.drawRect.Bottom + 10 + (2 * Me.TextSize)
+
+      Me.canvas.DrawText(Me.Caption, x, y, paint)
+    End Using
+  End Sub
+
+  Private Sub DrawXAxisLabels()
+    Using paint As New SKPaint()
+      paint.Color = Me.TextColor
+      paint.TextSize = Me.TextSize
+      paint.IsAntialias = True
+
+      ' Bestimme die maximale Breite eines Labels
+      Dim maxLabelWidth As Single = 0
+      For Each datum As Tuple(Of Date, Integer) In Me.dataset
+        Dim textWidth As Single = paint.MeasureText(datum.Item1.ToString("dd.MM."))
+        If textWidth > maxLabelWidth Then
+          maxLabelWidth = textWidth
+        End If
+      Next
+
+      ' Berechne die maximale Anzahl der Labels, die auf die x-Achse passen
+      Dim maxLabels As Integer = CInt(Math.Floor(Me.drawRect.Width / maxLabelWidth))
+
+      ' Bestimme den Abstand zwischen den Labels
+      Dim labelCount As Integer = Math.Min(Me.dataset.Count, maxLabels)
+      Dim dateStep As Single = Me.drawRect.Width / (labelCount - 1)
+
+      For i As Integer = 0 To labelCount - 1
+        Dim index As Integer = CInt(Math.Floor(i * (Me.dataset.Count - 1) / (labelCount - 1)))
+        Dim datum As Date = Me.dataset(index).Item1
+        Dim x As Single = Me.drawRect.Left + (i * dateStep)
+        Dim y As Single = Me.drawRect.Bottom + 5 + Me.TextSize
+
+        ' Zeichne das Label
+        Me.canvas.DrawText(datum.ToString("dd.MM."), x - (maxLabelWidth / 2), y, paint)
+      Next
+    End Using
+  End Sub
+
+  Private Sub DrawYAxisLabels()
+    Using paint As New SKPaint()
+      paint.Color = Me.TextColor
+      paint.TextSize = Me.TextSize
+      paint.IsAntialias = True
+
+      ' Bestimme den maximalen und minimalen Wert im Datensatz
+      Dim minValue As Integer = Me.dataset.Min(Function(t) t.Item2)
+      Dim maxValue As Integer = Me.dataset.Max(Function(t) t.Item2)
+
+      ' Bestimme die Anzahl der Labels und den Abstand zwischen ihnen
+      Dim labelCount As Integer = 10
+      Dim valueStep As Single = CSng((maxValue - minValue) / (labelCount - 1))
+
+      For i As Integer = 0 To labelCount - 1
+        Dim value As Single = minValue + (i * valueStep)
+        Dim y As Single = Me.drawRect.Bottom - ((value - minValue) / (maxValue - minValue) * Me.drawRect.Height)
+
+        ' Zeichne das Label
+        Me.canvas.DrawText(value.ToString(), Me.drawRect.Left - 10 - Me.CalculateMaxYLabelWidth, y, paint)
+      Next
+    End Using
+  End Sub
+
+  Private Sub DrawAxes()
+    Using paint As New SKPaint()
+      paint.Color = Me.AxisColor
+      paint.StrokeWidth = 2
+      Me.canvas = New SKCanvas(Me.bitmap)
+      ' Zeichne die x-Achse
+      Me.canvas.DrawLine(Me.drawRect.Left, Me.drawRect.Bottom, Me.drawRect.Right, Me.drawRect.Bottom, paint)
+      ' Zeichne die y-Achse
+      Me.canvas.DrawLine(Me.drawRect.Left, Me.drawRect.Bottom, Me.drawRect.Left, Me.drawRect.Top, paint)
+    End Using
+  End Sub
+
+  Private Sub CreateDrawRect()
+    ' Ränder der Zeichenfläche
+    Me.drawRect.Left = Me.Padding + Me.CalculateMaxYLabelWidth()
+    Me.drawRect.Top = Me.Padding
+    Me.drawRect.Right = Me.Width - Me.Padding
+    ' unteren Rand der Zeichenfläche anpassen in Abh�ngigkeit ob eine Beschriftung vorhanden ist oder nicht
+    Me.drawRect.Bottom = If(String.IsNullOrEmpty(Me.Caption),
+      Me.Height - Me.Padding - Me.CalculateTextHeight(),
+      Me.Height - Me.Padding - (2 * Me.CalculateTextHeight()))
+  End Sub
+
+  Private Function CalculateMaxYLabelWidth() As Single
+    Dim maxWidth As Single = 0
+
+    Using paint As New SKPaint()
+      paint.TextSize = Me.TextSize
+      paint.IsAntialias = True
+
+      ' Bestimme den maximalen und minimalen Wert im Datensatz
+      Dim minValue As Integer = Me.dataset.Min(Function(t) t.Item2)
+      Dim maxValue As Integer = Me.dataset.Max(Function(t) t.Item2)
+
+      ' Bestimme die Anzahl der Labels und den Abstand zwischen ihnen
+      Dim labelCount As Integer = 10
+      Dim valueStep As Single = CSng((maxValue - minValue) / (labelCount - 1))
+
+      For i As Integer = 0 To labelCount - 1
+        Dim value As Single = minValue + (i * valueStep)
+        Dim text As String = value.ToString()
+
+        ' Berechne die Breite des Textes
+        Dim textWidth As Single = paint.MeasureText(text)
+        If textWidth > maxWidth Then
+          maxWidth = textWidth
+        End If
+      Next
+    End Using
+
+    Return maxWidth
+  End Function
+
+  Private Sub CreateBitmap()
+    Me.bitmap = New SKBitmap(Me.Width, Me.Height)
+    Me.bitmap.Erase(Me.BackColor)
+  End Sub
 
   Private Sub EncodeImageToBase64()
     Me.base64Image = ""
@@ -84,104 +242,8 @@ Public Class ImageRenderer
     End Using
   End Sub
 
-  Private Sub DrawCaptionText()
-    If Not String.IsNullOrEmpty(Me.Caption) Then
-      Me.canvas.DrawText(Me.Caption, Me.x0, Me.Height + Me.legendHeight - 10, Me.textPaint)
-    End If
-  End Sub
-
-  Private Sub DrawDataLines()
-    For i As Integer = 0 To Me.dataset.Count - 2
-      Dim x1 As Single = Me.x0 + (Me.dateList.IndexOf(Me.dataset(i).Item1) * Me.xScale)
-      Dim y1 As Single = Me.y0 - ((Me.dataset(i).Item2 - Me.yMin) * Me.yScale)
-      Dim x2 As Single = Me.x0 + (Me.dateList.IndexOf(Me.dataset(i + 1).Item1) * Me.xScale)
-      Dim y2 As Single = Me.y0 - ((Me.dataset(i + 1).Item2 - Me.yMin) * Me.yScale)
-      Me.canvas.DrawLine(x1, y1, x2, y2, Me.linePaint)
-    Next
-  End Sub
-
-  Private Sub DrawDataPoints()
-    For i As Integer = 0 To Me.dataset.Count - 2
-      Dim px As Single = Me.x0 + (Me.dateList.IndexOf(Me.dataset(i).Item1) * Me.xScale)
-      Dim py As Single = Me.y0 - ((Me.dataset(i).Item2 - Me.yMin) * Me.yScale)
-      Me.canvas.DrawCircle(px, py, 4, Me.pointPaint)
-    Next
-  End Sub
-
-  Private Sub DrawYAxisLabels()
-    For y As Integer = Me.yMin To Me.yMax Step Math.Max(1, Me.yRange \ 10)
-      Dim py As Single = Me.y0 - ((y - Me.yMin) * Me.yScale)
-      Me.canvas.DrawLine(Me.x0, py, Me.Width - Me.adjustedPadding, py, Me.gridPaint)
-      Me.canvas.DrawText(y.ToString(), Me.x0 - Me.labelOffset, py + 5, Me.textPaint)
-    Next
-  End Sub
-
-  Private Sub DrawXAxisLabels()
-    For i As Integer = 0 To Me.dateList.Count - 1 Step 5
-      Dim px As Single = Me.x0 + (i * Me.xScale)
-      Me.canvas.DrawLine(px, Me.y0, px, Me.adjustedPadding, Me.gridPaint)
-      Me.canvas.DrawText(Me.dateList(i).ToString("dd.MM"), px - 15, Me.y0 + 20, Me.textPaint)
-    Next
-  End Sub
-
-  Private Sub DrawAxes()
-    Me.canvas.DrawLine(Me.x0, Me.adjustedPadding, Me.x0, Me.y0, Me.axisPaint) ' Y-Achse
-    Me.canvas.DrawLine(Me.x0, Me.y0, Me.Width - Me.adjustedPadding, Me.y0, Me.axisPaint) ' X-Achse
-  End Sub
-
-  Private Sub SetAxisCoordinates()
-    Me.x0 = Me.adjustedPadding + Me.labelOffset
-    Me.y0 = Me.Height - Me.adjustedPadding
-  End Sub
-
-  Private Sub InitializePaints()
-    Me.axisPaint = New SKPaint With {.Color = Me.AxisColor, .StrokeWidth = 2, .Style = SKPaintStyle.Stroke}
-    Me.gridPaint = New SKPaint With {.Color = Me.GridColor, .StrokeWidth = 1, .Style = SKPaintStyle.Stroke}
-    Me.linePaint = New SKPaint With {.Color = Me.LineColor, .StrokeWidth = 2, .Style = SKPaintStyle.Stroke}
-    Me.pointPaint = New SKPaint With {.Color = Me.PointColor, .StrokeWidth = 5, .Style = SKPaintStyle.Fill}
-    Me.textPaint = New SKPaint With {.Color = Me.TextColor, .TextSize = Me.TextSize}
-  End Sub
-
-  Private Sub InitializeCanvas()
-    Me.bitmap = New SKBitmap(Me.Width, Me.Height + Me.legendHeight + Me.Padding)
-    Me.canvas = New SKCanvas(Me.bitmap)
-    Me.canvas.Clear(Me.BackColor)
-  End Sub
-
-  Private Sub CalculateScales()
-    Me.xScale = CSng((Me.Width - (2 * Me.Padding) - Me.labelOffset) / (Me.xMax - Me.xMin))
-    Me.yScale = CSng((Me.Height - (2 * Me.Padding) - Me.legendHeight) / (Me.yMax - Me.yMin))
-  End Sub
-
-  Private Sub CalculateMaxLabelWidth()
-    Me.maxLabelWidth = Me.dataset.Max(Function(d) Me.textPaint.MeasureText(d.Item2.ToString()))
-    Me.labelOffset = CInt(Math.Ceiling(Me.maxLabelWidth)) + 10
-  End Sub
-
-  Private Sub SortUniqueDates()
-    Me.dateList = Me.uniqueDates.ToList()
-    Me.xMin = 0
-    Me.xMax = Me.dateList.Count - 1
-  End Sub
-
-  Private Sub CalculateYRange()
-    Me.yMin = Me.dataset.Min(Function(d) d.Item2)
-    Me.yMax = Me.dataset.Max(Function(d) d.Item2)
-    Me.yRange = Me.yMax - Me.yMin
-    If Me.yRange = 0 Then Me.yRange = 10
-    Me.yMin -= CInt(Me.yRange * 0.1)
-    Me.yMax += CInt(Me.yRange * 0.1)
-  End Sub
-
-  Private Sub AdjustPadding()
-    Me.adjustedPadding = Me.Padding
-  End Sub
-
-  Private Sub CalculateCaptionHeight()
-    Me.legendHeight = If(String.IsNullOrEmpty(Me.Caption), 0, CInt(Me.textPaint.TextSize + 10))
-  End Sub
-
   Private Sub ParseDataLines(dataLines() As String)
+    Me.dataset.Clear()
     Try
       For i As Integer = 0 To dataLines.Length - 1
         Dim parts = dataLines(i).Split(";"c)
