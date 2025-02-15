@@ -1,10 +1,10 @@
-ï»¿'
+'
 '
 '****************************************************************************************************************
 'Parser.vb
 '(c) 2022 - 2024 by Andreas Sauer
 '
-' Diese Datei enthÃ¤lt Hilfsfunktionen zum Herunterladen und Verarbeiten von Websitedaten.
+' Diese Datei enthält Hilfsfunktionen zum Herunterladen und Verarbeiten von Websitedaten.
 '
 '****************************************************************************************************************
 '
@@ -14,7 +14,7 @@ Imports System.Net.Http
 Class HelperFunctions
 
   ''' <summary>
-  ''' LÃ¤dt den Quelltext einer Website herunter
+  ''' Lädt den Quelltext einer Website herunter
   ''' </summary>
   Friend Shared Async Function GetWebSource(URL As String) As Task(Of String)
     Dim client As New HttpClient
@@ -30,7 +30,7 @@ Class HelperFunctions
   ''' Liest die Daten aus dem Quelltext der Website
   ''' </summary>
   Friend Shared Function GetDataSource(Source As String, Location As String) As List(Of String)
-    'FehlerprÃ¼fung
+    'Fehlerprüfung
     If String.IsNullOrEmpty(Source) Then
       Throw New ArgumentException(String.Format(My.Resources.NullOrEmtyMessage, NameOf(Source)))
     End If
@@ -43,11 +43,11 @@ Class HelperFunctions
     'Datenzeilen trennen
     Dim result As New List(Of String)
     For Each datarow As String In datasource.Split("<tr>")
-      'ZeilenumbrÃ¼che, Tabstopps, Leerzeichen entfernen und Tags durch Semikolon und Punkt durch Komma ersetzen
+      'Zeilenumbrüche, Tabstopps, Leerzeichen entfernen und Tags durch Semikolon und Punkt durch Komma ersetzen
       datarow = datarow.Replace(vbCrLf, "").Replace(vbTab, "").Replace(" ", "").Replace("<td>", ";").Replace(".", ",")
       'erstes ; entfernen
       datarow = Mid(datarow, 2)
-      'nur zeilen mit Daten Ã¼bernehmen
+      'nur zeilen mit Daten übernehmen
       If datarow <> "" Then
         result.Add(datarow)
       End If
@@ -61,7 +61,10 @@ Class HelperFunctions
   Friend Shared Function CreateData(datarow As String) As String
     Dim datum As Date = CDate(datarow.Split(";").First)
     Dim pegel As Integer = CInt(CDec(datarow.Split(";").Last) * 1000)
-    Dim result As String = datum.ToShortDateString & ";" & pegel.ToString
+    Dim day As String = datum.Day.ToString("00")
+    Dim month As String = datum.Month.ToString("00")
+    Dim year As String = datum.Year.ToString("0000")
+    Dim result As String = $"{day}.{month}.{year};{pegel}"
     Return result
   End Function
 
