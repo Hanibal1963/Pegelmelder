@@ -157,7 +157,7 @@ Module HohenwarteFunctions
 
     Dim datalines As String() = imagedata.ToArray
     Dim renderer As New ImageRenderer(datalines) With
-      {.Height = 200, .Width = 300, .Padding = 10, .BackColor = SkiaSharp.SKColors.Gray}
+      {.Height = 200, .Width = 300, .Padding = 20, .Caption = $"Talsperre Hohenwarte", .TextSize = 10}
     Dim imagecode = renderer.GenerateImageTag
 
     Return imagecode
