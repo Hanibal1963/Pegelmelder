@@ -1,7 +1,10 @@
 {
   "profiles": {
     "Pegelmelder": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "remoteDebugMachine": "pi@raspi4:22",
+      "authenticationMode": "Windows"
     },
     "WSL": {
       "commandName": "WSL2",

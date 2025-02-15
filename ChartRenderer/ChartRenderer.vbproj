@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>SchlumpfSoft.ChartRenderer</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>Bibliothek zum erstellen von Diagrammbildern</Title>
     <Version>1.2025.0215.1447</Version>
     <Authors>Andreas Sauer</Authors>
@@ -30,6 +30,8 @@
 
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="3.116.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.116.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.116.1" />
   </ItemGroup>
 
   <ItemGroup>

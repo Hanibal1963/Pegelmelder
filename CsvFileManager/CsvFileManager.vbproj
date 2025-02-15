@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>SchlumpfSoft.CsvFileManager</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <UseApplicationFramework>False</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
