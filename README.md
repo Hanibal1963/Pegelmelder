@@ -88,3 +88,5 @@ Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen findest du in d
 ### Autor
 
 Das Projekt wurde von Andreas Sauer entwickelt. (c) 2022 - 2025
+
+Teile der projekte wurden mit Hilfe von [GitHub CoPilot](https://docs.github.com/de/copilot) erstellt.
