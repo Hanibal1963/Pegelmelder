@@ -48,13 +48,60 @@ Namespace Pegelmelder
 
     Sub Main()
 
-      'KofigurationsPfad initialisieren
-      SetConfigPath()
+      'Pfade zu den Dateien setzen
+      InitPaths()
+      'Konfigurationsdateien prüfen und laden 
+      CheckConfigurationFile()
+      'Emaildatenbank prüfen und laden
+      CheckEmailDataFile()
 
-      'Datenpfad initialisieren
-      SetDataPath()
+      'Merker für neue Daten setzen
+      NewHohenwarteData = False
+      NewBleilochData = False
 
-#Region "Konfigurationsdatei"
+      'Neue Pegeldaten speichern
+      NewHohenwarteData = AddHohenwartePegel(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
+      NewBleilochData = AddBleilochPegel(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
+
+      'Differenzwerte berechnen
+      CalculateDifferences()
+
+      'Überprüfen ob neue Daten vorliegen
+      If NewHohenwarteData = False AndAlso NewBleilochData = False Then
+        'Beenden wenn keine neuen Daten vorhanden sind
+        Exit Sub
+      Else
+        SendMails()
+      End If
+
+    End Sub
+
+    Private Sub CalculateDifferences()
+      'Differenzwerte berechnen wenn neue Daten in Bleiloch vorhanden sind
+      If NewBleilochData Then
+        CalculateBleilochDifferences(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
+      End If
+      'Differenzwerte berechnen wenn neue Daten in Hohenwarte vorhanden sind
+      If NewHohenwarteData Then
+        CalculateHohenwarteDifferences(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
+      End If
+    End Sub
+
+    Private Sub CheckEmailDataFile()
+
+      'Prüfe ob Datenbank für Emailempfänger existiert
+      Dim emldatafile As String = ConfigFilePath & Path.DirectorySeparatorChar & EMAILDATAFILE
+      Console.WriteLine(String.Format(My.Resources.CheckingEmailDataFile, emldatafile))
+
+      'Datenbank erstellen falls sie nicht existiert
+      If Not File.Exists(emldatafile) Then
+        CreateEmailDataFile(emldatafile)
+        Exit Sub
+      End If
+
+    End Sub
+
+    Private Sub CheckConfigurationFile()
 
       'Konfigurationsdatei überprüfen
       Dim conffile As String = ConfigFilePath & Path.DirectorySeparatorChar & CONFIGFILE
@@ -94,48 +141,6 @@ Namespace Pegelmelder
           Exit Select
 
       End Select
-
-#End Region
-
-#Region "Emaildatenbank"
-
-      'Prüfe ob Datenbank für Emailempfänger existiert
-      Dim emldatafile As String = ConfigFilePath & Path.DirectorySeparatorChar & EMAILDATAFILE
-      Console.WriteLine(String.Format(My.Resources.CheckingEmailDataFile, emldatafile))
-
-      'Datenbank erstellen falls sie nicht existiert
-      If Not File.Exists(emldatafile) Then
-        CreateEmailDataFile(emldatafile)
-        Exit Sub
-      End If
-
-#End Region
-
-      'Merker für neue Daten setzen
-      NewHohenwarteData = False
-      NewBleilochData = False
-
-      'Neue Pegeldaten speichern
-      NewHohenwarteData = AddHohenwartePegel(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
-      NewBleilochData = AddBleilochPegel(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
-
-      'Differenzwerte berechnen wenn neue Daten in Bleiloch vorhanden sind
-      If NewBleilochData Then
-        CalculateBleilochDifferences(DataFilePath & Path.DirectorySeparatorChar & BLEILOCHDATAFILE)
-      End If
-
-      'Differenzwerte berechnen wenn neue Daten in Hohenwarte vorhanden sind
-      If NewHohenwarteData Then
-        CalculateHohenwarteDifferences(DataFilePath & Path.DirectorySeparatorChar & HOHENWARTEDATAFILE)
-      End If
-
-      'Überprüfen ob neue Daten vorliegen
-      If NewHohenwarteData = False AndAlso NewBleilochData = False Then
-        'Beenden wenn keine neuen Daten vorhanden sind
-        Exit Sub
-      Else
-        SendMails()
-      End If
 
     End Sub
 
@@ -384,8 +389,8 @@ Namespace Pegelmelder
     ''' <returns>Eine formatierte Zeichenfolge, die die abgerufenen Bleiloch-Daten enthält.</returns>
     Private Function GetBleilochData(File As String, Records As Integer, Linetemplate As String) As String
 
-      Dim result As String = ""
-      Dim record As String '= Linetemplate
+      Dim result As String = $""
+      Dim record As String
       Dim data As New CsvFile(File, PEGELDATAHEADER)
       Dim length As Integer = data.Data.Count - 1
       Dim datum As String
@@ -406,7 +411,7 @@ Namespace Pegelmelder
         record = record.Replace("%DATUM%", datum)
         record = record.Replace("%PEGEL%", pegel)
         record = record.Replace("%DIFFERENZ%", diff)
-        result &= record
+        result = record
       Next
 
       Return result
@@ -642,6 +647,13 @@ Namespace Pegelmelder
       File.WriteAllText(conffile, builder.ToString)
       Console.WriteLine(My.Resources.NewConfigFileCreated)
       Console.WriteLine(My.Resources.InsertConfigFileData)
+    End Sub
+
+    Private Sub InitPaths()
+      'KofigurationsPfad initialisieren
+      SetConfigPath()
+      'Datenpfad initialisieren
+      SetDataPath()
     End Sub
 
 #End Region
