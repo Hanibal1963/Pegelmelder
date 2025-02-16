@@ -248,7 +248,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Sucht eine lokalisierte Zeichenfolge, die In diese Datenbank m�ssen noch die Empfänger der Emails eingetragen werden. ähnelt.
+        '''  Sucht eine lokalisierte Zeichenfolge, die In diese Datenbank müssen noch die Empfänger der Emails eingetragen werden. ähnelt.
         '''</summary>
         Friend ReadOnly Property InsertEmailData() As String
             Get
@@ -289,6 +289,16 @@ Namespace My.Resources
         Friend ReadOnly Property NullOrEmtyMessage() As String
             Get
                 Return ResourceManager.GetString("NullOrEmtyMessage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Beim Senden der Email ist ein Fehler aufgetreten:
+        '''(&quot;{0}&quot;) ähnelt.
+        '''</summary>
+        Friend ReadOnly Property SendMailErrorMsg() As String
+            Get
+                Return ResourceManager.GetString("SendMailErrorMsg", resourceCulture)
             End Get
         End Property
     End Module

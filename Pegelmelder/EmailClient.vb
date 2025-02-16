@@ -56,6 +56,7 @@ Namespace Pegelmelder
 			Try
 				Me.smtpsrv.Send(mail)
 			Catch ex As Exception
+				Console.WriteLine(String.Format(My.Resources.SendMailErrorMsg, ex.ToString))
 			End Try
 		End Sub
 
