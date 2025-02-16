@@ -14,7 +14,6 @@ Zusätzlich versendet das Programm E-Mails mit den aktuellen Pegeldaten an eine L
 - Versenden von E-Mails mit den aktuellen Pegeldaten
 - Verwaltung der E-Mail-Empfänger
 
-
 ### Das Projekt
 
 Das Projekt umfasst folgende Dateien:
