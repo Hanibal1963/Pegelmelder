@@ -25,7 +25,7 @@ Namespace Pegelmelder
 		''' <param name="User">Anmeldename des SMTP-Servers</param>
 		''' <param name="Passwd">Anmeldepasswort des SMTP-Servers</param>
 		''' <param name="SSl">Verschlüsselung</param>
-		Public Sub New(Host As String, Port As Integer, User As String, Passwd As String, Optional SSl As Boolean = True)
+		Public Sub New(Host As String, Port As Integer, User As String, Passwd As String, SSl As Boolean)
 			With Me.smtpsrv
 				.Host = Host
 				.Port = Port
@@ -33,6 +33,18 @@ Namespace Pegelmelder
 				.EnableSsl = SSl
 				.Credentials = New NetworkCredential With {.UserName = User, .Password = Passwd}
 			End With
+		End Sub
+
+		''' <summary>
+		''' Erstellt einen neuen EmailClient
+		''' </summary>
+		''' <param name="Host">Hostname oder IP des SMTP-Servers</param>
+		''' <param name="Port">Anschlussnummer</param>
+		''' <param name="User">Anmeldename des SMTP-Servers</param>
+		''' <param name="Passwd">Anmeldepasswort des SMTP-Servers</param>
+		''' <remarks>Der Client wird mit aktivierter SSL-Verschlüsselung erstellt.</remarks>
+		Public Sub New(Host As String, Port As Integer, User As String, Passwd As String)
+			Me.New(Host, Port, User, Passwd, True)
 		End Sub
 
 		''' <summary>
