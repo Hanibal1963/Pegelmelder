@@ -58,23 +58,20 @@ Namespace Pegelmelder
 
       'Konfigurationsdatei überprüfen
       Dim conffile As String = ConfigFilePath & Path.DirectorySeparatorChar & CONFIGFILE
-      'Console.WriteLine($"Prüfe ob Konfigurationsdatei existiert (""{conffile}"")")
       Console.WriteLine(String.Format(My.Resources.CheckingConfigFile, conffile))
 
       'neue Konfigurationsdatei erstellen wenn sie nicht existiert
       If Not File.Exists(conffile) Then
-        Console.WriteLine(String.Format(My.Resources.ConfigFileNotFound, conffile))
-        Dim builder As New StringBuilder
-        Dim unused = builder.AppendLine(My.Resources.ConfigFileTemplate)
-        File.WriteAllText(conffile, builder.ToString)
-        Console.WriteLine(My.Resources.NewConfigFileCreated)
-        Console.WriteLine(My.Resources.InsertConfigFileData)
+        CreateConfigFile(conffile)
         Exit Sub
       End If
+
       LoadConfig(conffile)
 
       'Konfiguration für Server überprüfen
-      If Server = "" Or User = "" Or Passw = "" Or Port = "" Or Absender = "" Then
+      If String.IsNullOrEmpty(Server) Or String.IsNullOrEmpty(User) Or
+          String.IsNullOrEmpty(Passw) Or String.IsNullOrEmpty(Port) Or
+          String.IsNullOrEmpty(Absender) Then
         Console.WriteLine($"Die Konfigurationsdatei (""{conffile}"") ist fehlerhaft.")
         Console.WriteLine($"Bitte trage die korrekten Daten in diese Datei ein.")
         Exit Sub
@@ -90,15 +87,8 @@ Namespace Pegelmelder
 
       'Datenbank erstellen falls sie nicht existiert
       If Not File.Exists(emldatafile) Then
-
-        Console.WriteLine(String.Format(My.Resources.EmailDataFileNotFound, emldatafile))
-        Dim builder As New StringBuilder
-        Dim unused = builder.AppendLine(My.Resources.EmaildatenTemplate)
-        File.WriteAllText(emldatafile, builder.ToString)
-        Console.WriteLine(My.Resources.NewEmailDataFileCreated)
-        Console.WriteLine(My.Resources.InsertEmailData)
+        CreateEmailDataFile(emldatafile)
         Exit Sub
-
       End If
 
 #End Region
@@ -129,6 +119,24 @@ Namespace Pegelmelder
         SendMails()
       End If
 
+    End Sub
+
+    Private Sub CreateEmailDataFile(emldatafile As String)
+      Console.WriteLine(String.Format(My.Resources.EmailDataFileNotFound, emldatafile))
+      Dim builder As New StringBuilder
+      Dim unused = builder.AppendLine(My.Resources.EmaildatenTemplate)
+      File.WriteAllText(emldatafile, builder.ToString)
+      Console.WriteLine(My.Resources.NewEmailDataFileCreated)
+      Console.WriteLine(My.Resources.InsertEmailData)
+    End Sub
+
+    Private Sub CreateConfigFile(conffile As String)
+      Console.WriteLine(String.Format(My.Resources.ConfigFileNotFound, conffile))
+      Dim builder As New StringBuilder
+      Dim unused = builder.AppendLine(My.Resources.ConfigFileTemplate)
+      File.WriteAllText(conffile, builder.ToString)
+      Console.WriteLine(My.Resources.NewConfigFileCreated)
+      Console.WriteLine(My.Resources.InsertConfigFileData)
     End Sub
 
 #Region "Hohenwartefunktionen"
