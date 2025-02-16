@@ -1,4 +1,3 @@
-'****************************************************************************************************************
 ' CsvFile.vb
 ' (c) 2022 - 2025 by Andreas Sauer
 '
@@ -16,8 +15,6 @@
 ' - DeleteRecord(Index As Integer): Löscht einen Datensatz mit dem angegebenen Index.
 ' - Dispose(): Führt anwendungsspezifische Aufgaben zur Freigabe von Ressourcen durch.
 ' - Dispose(disposing As Boolean): Bereinigt die Ressourcen, die von der Klasse verwendet werden.
-'
-'****************************************************************************************************************
 '
 
 ''' <summary>

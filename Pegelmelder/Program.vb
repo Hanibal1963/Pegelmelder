@@ -1,11 +1,8 @@
-'****************************************************************************************************************
-'Program.vb
-'(c) 2022 - 2025 by Andreas Sauer
+' Program.vb
+' (c) 2022 - 2025 by Andreas Sauer
 '
 ' Dieses Programm überprüft und erstellt Konfigurations- und Datenbankdateien, 
 ' lädt Konfigurationsdaten, speichert neue Pegeldaten und sendet E-Mails, wenn neue Daten vorliegen.
-'
-'****************************************************************************************************************
 '
 
 Imports System.IO

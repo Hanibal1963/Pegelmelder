@@ -1,12 +1,8 @@
-'
-'****************************************************************************************************************
 ' WebSiteParser.vb
 ' (c) 2022 - 2025 by Andreas Sauer
 '
 ' Diese Klasse stellt Methoden zum Parsen von Websitedaten zur Verfügung.
 ' Sie implementiert das IDisposable-Interface, um Ressourcen freizugeben.
-'
-'****************************************************************************************************************
 '
 
 Imports System.Net.Http
