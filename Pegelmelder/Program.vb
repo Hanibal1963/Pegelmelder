@@ -116,31 +116,7 @@ Namespace Pegelmelder
       LoadConfig(conffile)
 
       'Konfiguration für Server überprüfen
-      Select Case True
-        Case String.IsNullOrEmpty(Server)
-          PrintMsg($"Die Serveradresse", conffile)
-          Exit Sub
-
-        Case String.IsNullOrEmpty(User)
-          PrintMsg($"Der Benutzername", conffile)
-          Exit Sub
-
-        Case String.IsNullOrEmpty(Passw)
-          PrintMsg($"Das Passwort", conffile)
-          Exit Sub
-
-        Case String.IsNullOrEmpty(Port)
-          PrintMsg($"Der Serverport", conffile)
-          Exit Sub
-
-        Case String.IsNullOrEmpty(Absender)
-          PrintMsg($"Die Absender Email", conffile)
-          Exit Sub
-
-        Case Else
-          Exit Select
-
-      End Select
+      If Not IsServerConfiFileOK(conffile) Then Exit Sub
 
     End Sub
 
@@ -648,6 +624,33 @@ Namespace Pegelmelder
       Console.WriteLine(My.Resources.NewConfigFileCreated)
       Console.WriteLine(My.Resources.InsertConfigFileData)
     End Sub
+
+    Private Function IsServerConfiFileOK(File As String) As Boolean
+      Dim result As Boolean = False
+
+      Select Case True
+        Case String.IsNullOrEmpty(Server)
+          PrintMsg($"Die Serveradresse", File)
+
+        Case String.IsNullOrEmpty(User)
+          PrintMsg($"Der Benutzername", File)
+
+        Case String.IsNullOrEmpty(Passw)
+          PrintMsg($"Das Passwort", File)
+
+        Case String.IsNullOrEmpty(Port)
+          PrintMsg($"Der Serverport", File)
+
+        Case String.IsNullOrEmpty(Absender)
+          PrintMsg($"Die Absender Email", File)
+
+        Case Else
+          result = True
+
+      End Select
+
+      Return result
+    End Function
 
     Private Sub InitPaths()
       'KofigurationsPfad initialisieren
