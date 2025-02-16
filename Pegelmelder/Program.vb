@@ -63,7 +63,6 @@ Namespace Pegelmelder
 
       'neue Konfigurationsdatei erstellen wenn sie nicht existiert
       If Not File.Exists(conffile) Then
-
         Console.WriteLine(String.Format(My.Resources.ConfigFileNotFound, conffile))
         Dim builder As New StringBuilder
         Dim unused = builder.AppendLine(My.Resources.ConfigFileTemplate)
@@ -71,17 +70,14 @@ Namespace Pegelmelder
         Console.WriteLine(My.Resources.NewConfigFileCreated)
         Console.WriteLine(My.Resources.InsertConfigFileData)
         Exit Sub
-
       End If
       LoadConfig(conffile)
 
       'Konfiguration für Server überprüfen
       If Server = "" Or User = "" Or Passw = "" Or Port = "" Or Absender = "" Then
-
         Console.WriteLine($"Die Konfigurationsdatei (""{conffile}"") ist fehlerhaft.")
         Console.WriteLine($"Bitte trage die korrekten Daten in diese Datei ein.")
         Exit Sub
-
       End If
 
 #End Region
@@ -308,17 +304,15 @@ Namespace Pegelmelder
         For index As Integer = 1 To tempdata.Count - 1
 
           If index = 1 And tempdata.ElementAt(index).Split(";").Length = 2 Then
-
             'Differenz für 1. Datensatz auf 0 setzen falls noch nicht erfolgt
             PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";000000")
+          End If
 
-          ElseIf tempdata.ElementAt(index).Split(";").Length = 2 Then
-
+          If index > 1 And tempdata.ElementAt(index).Split(";").Length = 2 Then
             'Differenz für alle anderen Datensätze berechnen falls noch nicht erfolgt
             oldpegel = CInt(tempdata.ElementAt(index - 1).Split(";").ElementAt(1))
             newpegel = CInt(tempdata.ElementAt(index).Split(";").ElementAt(1))
             differenz = newpegel - oldpegel
-
             'Vorzeichen für die Differenz setzen und Datensätze ersetzen
             If differenz < 0 Then
               'Differenz ist < 0
@@ -327,7 +321,6 @@ Namespace Pegelmelder
               'Differenz ist >= 0 oder
               PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+" & Format(differenz, "000000"))
             End If
-
           End If
 
         Next
@@ -623,6 +616,5 @@ Namespace Pegelmelder
 #End Region
 
   End Module
-
 
 End Namespace
