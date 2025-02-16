@@ -2,7 +2,7 @@
 
 ### Einführung
 
-Pegelmelder ist eine VB.NET-Projektgruppe, die für den **RaspberryPi** entwickelt wurde, um die Pegelstände der Talsperren Bleiloch und Hohenwarte zu überwachen und die Daten in CSV-Dateien zu speichern. 
+Pegelmelder ist ein VB.NET-Befehlszeilenprogramm, das für den **RaspberryPi** entwickelt wurde, um die Pegelstände der Talsperren Bleiloch und Hohenwarte zu überwachen und die Daten in CSV-Dateien zu speichern. 
 
 Zusätzlich versendet das Programm E-Mails mit den aktuellen Pegeldaten an eine Liste von Empfängern.
 
@@ -14,27 +14,16 @@ Zusätzlich versendet das Programm E-Mails mit den aktuellen Pegeldaten an eine L
 - Versenden von E-Mails mit den aktuellen Pegeldaten
 - Verwaltung der E-Mail-Empfänger
 
-### Projekt CsvFileManager
 
-Die `CsvFile`-Klasse verwaltet CSV-Dateien. Sie kann Daten aus CSV-Dateien lesen, neue Datensätze hinzufügen, vorhandene Datensätze ersetzen und löschen.
+### Das Projekt ...
 
-### Projekt EmailDocument
+... umfasst folgende Dateien:
 
-Die `Document`-Klasse erstellt E-Mail-Dokumente mit Platzhaltern, die durch aktuelle Daten ersetzt werden.
-
-### Projekt MailClient
-
-Die `MailClient`-Klasse sendet E-Mails über einen konfigurierten SMTP-Server.
-
-### Projekt WebSiteParser
-
-Die `Parser`-Klasse lädt den HTML-Quelltext einer Website herunter und extrahiert die Pegeldaten der Talsperren Bleiloch und Hohenwarte.
-
-### Projekt ChartRenderer
-
-Die `ImageRenderer`-Klasse erstellt eine Diagramgrafik aus den übergebenen Daten.
-
-### Projekt Pegelmelder
+- Die `CsvFile`-Klasse verwaltet CSV-Dateien. Sie kann Daten aus CSV-Dateien lesen, neue Datensätze hinzufügen, vorhandene Datensätze ersetzen und löschen.
+- Die `EmailDocument`-Klasse erstellt E-Mail-Dokumente mit Platzhaltern, die durch aktuelle Daten ersetzt werden.
+- Die `EmailClient`-Klasse sendet E-Mails über einen konfigurierten SMTP-Server.
+- Die `WebSiteParser`-Klasse lädt den HTML-Quelltext einer Website herunter und extrahiert die Pegeldaten der Talsperren Bleiloch und Hohenwarte.
+- Die `ImageRenderer`-Klasse erstellt eine Diagramgrafik aus den übergebenen Daten.
 
 Das Hauptprogramm (`Program.vb`) führt die folgenden Schritte aus:
 

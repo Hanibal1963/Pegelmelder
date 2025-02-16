@@ -8,7 +8,7 @@ Imports SkiaSharp
 Imports System.Globalization
 Imports System.Text
 
-Public Class ImageRenderer
+Friend Class ImageRenderer
 
   Private ReadOnly dataset As New List(Of Tuple(Of Date, Integer))()
   Private ReadOnly uniqueDates As New SortedSet(Of Date)()

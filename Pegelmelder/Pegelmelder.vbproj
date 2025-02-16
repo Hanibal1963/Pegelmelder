@@ -34,29 +34,21 @@
 
   <ItemGroup>
     <Compile Remove="CsvFileManager.vb" />
-    <Compile Remove="EmailDocument.vb" />
-    <Compile Remove="MailClient.vb" />
-    <Compile Remove="WebSiteParser.vb" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="raspi4.bat" />
-    <None Remove="Ressourcen\ConfigFileTemplate.txt" />
-    <None Remove="Ressourcen\DatenZeilenTemplate.txt" />
-    <None Remove="Ressourcen\EmaildatenTemplate.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Ressourcen\ConfigFileTemplate.txt" />
-    <EmbeddedResource Include="Ressourcen\EmaildatenTemplate.txt" />
+    <EmbeddedResource Include="Resources\ConfigFileTemplate.txt" />
+    <EmbeddedResource Include="Resources\EmaildatenTemplate.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ChartRenderer\ChartRenderer.vbproj" />
-    <ProjectReference Include="..\CsvFileManager\CsvFileManager.vbproj" />
-    <ProjectReference Include="..\EmailDocument\EmailDocument.vbproj" />
-    <ProjectReference Include="..\MailClient\MailClient.vbproj" />
-    <ProjectReference Include="..\WebSiteParser\WebSiteParser.vbproj" />
+    <PackageReference Include="SkiaSharp" Version="3.116.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="3.116.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.116.1" />
   </ItemGroup>
 
   <ItemGroup>

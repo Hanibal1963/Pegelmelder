@@ -1,10 +1,10 @@
-ï»¿'****************************************************************************************************************
-'MailClient.vb
-'(c) 2022 - 2024 by Andreas Sauer
+'****************************************************************************************************************
+' EmailClient.vb
+' (c) 2022 - 2025 by Andreas Sauer
 '
-' Diese Klasse stellt Methoden zur VerfÃ¼gung, um E-Mails Ã¼ber einen SMTP-Server zu versenden. Sie ermÃ¶glicht die 
+' Diese Klasse stellt Methoden zur Verfügung, um E-Mails über einen SMTP-Server zu versenden. Sie ermöglicht die 
 ' Konfiguration des SMTP-Servers und das Senden von E-Mails mit verschiedenen Parametern wie Absenderadresse, 
-' EmpfÃ¤ngeradresse, Betreff und Inhalt.
+' Empfängeradresse, Betreff und Inhalt.
 '
 '****************************************************************************************************************
 '
@@ -15,8 +15,10 @@ Imports System.Net.Mail
 ''' <summary>
 ''' Klasse zum versenden von Emails
 ''' </summary>
-Public Class Client
+Public Class EmailClient
 
+	' Definiert einen SMTP-Client für den Versand von E-Mails
+	Private ReadOnly smtpsrv As New SmtpClient
 
 	''' <summary>
 	''' Erstellt einen neuen EmailClient
@@ -25,9 +27,9 @@ Public Class Client
 	''' <param name="Port">Anschlussnummer</param>
 	''' <param name="User">Anmeldename des SMTP-Servers</param>
 	''' <param name="Passwd">Anmeldepasswort des SMTP-Servers</param>
-	''' <param name="SSl">VerschlÃ¼sselung</param>
+	''' <param name="SSl">Verschlüsselung</param>
 	Public Sub New(Host As String, Port As Integer, User As String, Passwd As String, Optional SSl As Boolean = True)
-		With smtpsrv
+		With Me.smtpsrv
 			.Host = Host
 			.Port = Port
 			.UseDefaultCredentials = False
@@ -42,9 +44,9 @@ Public Class Client
 	''' <param name="From">Absenderadresse der Email</param>
 	''' <param name="Name">Anzeigename des Absenders</param>
 	''' <param name="Subject">Betreff der Email</param>
-	''' <param name="[To]">EmpfÃ¤ngeradresse der Email</param>
+	''' <param name="[To]">Empfängeradresse der Email</param>
 	''' <param name="Msg">Inhalt der Email (Text oder Htmlquelltext)</param>
-	''' <param name="Html">False fÃ¼r "Nur Text", True fÃ¼r HTML (Quelltext)</param>
+	''' <param name="Html">False für "Nur Text", True für HTML (Quelltext)</param>
 	Public Sub Send(From As String, Name As String, Subject As String, [To] As String, Msg As String, Optional Html As Boolean = True)
 		Dim mail As New MailMessage
 		With mail
@@ -55,7 +57,7 @@ Public Class Client
 			.To.Add([To])
 		End With
 		Try
-			smtpsrv.Send(mail)
+			Me.smtpsrv.Send(mail)
 		Catch ex As Exception
 		End Try
 	End Sub
