@@ -121,23 +121,6 @@ Namespace Pegelmelder
 
     End Sub
 
-    Private Sub CreateEmailDataFile(emldatafile As String)
-      Console.WriteLine(String.Format(My.Resources.EmailDataFileNotFound, emldatafile))
-      Dim builder As New StringBuilder
-      Dim unused = builder.AppendLine(My.Resources.EmaildatenTemplate)
-      File.WriteAllText(emldatafile, builder.ToString)
-      Console.WriteLine(My.Resources.NewEmailDataFileCreated)
-      Console.WriteLine(My.Resources.InsertEmailData)
-    End Sub
-
-    Private Sub CreateConfigFile(conffile As String)
-      Console.WriteLine(String.Format(My.Resources.ConfigFileNotFound, conffile))
-      Dim builder As New StringBuilder
-      Dim unused = builder.AppendLine(My.Resources.ConfigFileTemplate)
-      File.WriteAllText(conffile, builder.ToString)
-      Console.WriteLine(My.Resources.NewConfigFileCreated)
-      Console.WriteLine(My.Resources.InsertConfigFileData)
-    End Sub
 
 #Region "Hohenwartefunktionen"
 
@@ -544,6 +527,15 @@ Namespace Pegelmelder
 
     End Function
 
+    Private Sub CreateEmailDataFile(emldatafile As String)
+      Console.WriteLine(String.Format(My.Resources.EmailDataFileNotFound, emldatafile))
+      Dim builder As New StringBuilder
+      Dim unused = builder.AppendLine(My.Resources.EmaildatenTemplate)
+      File.WriteAllText(emldatafile, builder.ToString)
+      Console.WriteLine(My.Resources.NewEmailDataFileCreated)
+      Console.WriteLine(My.Resources.InsertEmailData)
+    End Sub
+
 #End Region
 
 #Region "Konfiguratoionsfunktionen"
@@ -619,6 +611,15 @@ Namespace Pegelmelder
 
       Next
 
+    End Sub
+
+    Private Sub CreateConfigFile(conffile As String)
+      Console.WriteLine(String.Format(My.Resources.ConfigFileNotFound, conffile))
+      Dim builder As New StringBuilder
+      Dim unused = builder.AppendLine(My.Resources.ConfigFileTemplate)
+      File.WriteAllText(conffile, builder.ToString)
+      Console.WriteLine(My.Resources.NewConfigFileCreated)
+      Console.WriteLine(My.Resources.InsertConfigFileData)
     End Sub
 
 #End Region
