@@ -1,5 +1,5 @@
+' Copyright (c)2022-2025 by Andreas Sauer 
 ' CsvFile.vb
-' (c) 2022 - 2025 by Andreas Sauer
 '
 ' Diese Datei enthält die Definition der Klasse CsvFile, die zum Verwalten von CSV-Dateien verwendet wird.
 ' Die Klasse bietet Methoden zum Lesen, Schreiben, Suchen, Hinzufügen, Ersetzen und Löschen von Datensätzen

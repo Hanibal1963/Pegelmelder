@@ -1,5 +1,5 @@
-﻿' ImageRenderer.vb
-' (c) 2025 by Andreas Sauer
+﻿' Copyright (c)2025 by Andreas Sauer 
+' ImageRenderer.vb
 '
 
 Imports SkiaSharp

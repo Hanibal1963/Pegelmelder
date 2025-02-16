@@ -1,5 +1,5 @@
+' Copyright (c)2022-2025 by Andreas Sauer 
 ' EmailClient.vb
-' (c) 2022 - 2025 by Andreas Sauer
 '
 ' Diese Klasse stellt Methoden zur Verfügung, um E-Mails über einen SMTP-Server zu versenden. Sie ermöglicht die 
 ' Konfiguration des SMTP-Servers und das Senden von E-Mails mit verschiedenen Parametern wie Absenderadresse, 
