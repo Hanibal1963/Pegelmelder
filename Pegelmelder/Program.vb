@@ -158,17 +158,15 @@ Module Program
       For index As Integer = 1 To tempdata.Count - 1
 
         If index = 1 And tempdata.ElementAt(index).Split(";").Length = 2 Then
-
           'Differenz für 1. Datensatz auf 0 setzen falls noch nicht erfolgt
           PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+000000")
+        End If
 
-        ElseIf tempdata.ElementAt(index).Split(";").Length = 2 Then
-
+        If index > 1 And tempdata.ElementAt(index).Split(";").Length = 2 Then
           'Differenz für alle anderen Datensätze berechnen falls noch nicht erfolgt
           oldpegel = CInt(tempdata.ElementAt(index - 1).Split(";").ElementAt(1))
           newpegel = CInt(tempdata.ElementAt(index).Split(";").ElementAt(1))
           differenz = newpegel - oldpegel
-
           'Vorzeichen für die Differenz setzen und Datensätze ersetzen
           If differenz < 0 Then
             'Differenz ist < 0
@@ -177,7 +175,6 @@ Module Program
             'Differenz ist >= 0 oder 
             PegelDataFile.ReplaceValue(index, tempdata.ElementAt(index) & ";+" & Format(differenz, "000000"))
           End If
-
         End If
 
       Next
