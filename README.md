@@ -15,9 +15,9 @@ Zusätzlich versendet das Programm E-Mails mit den aktuellen Pegeldaten an eine L
 - Verwaltung der E-Mail-Empfänger
 
 
-### Das Projekt ...
+### Das Projekt
 
-... umfasst folgende Dateien:
+Das Projekt umfasst folgende Dateien:
 
 - Die `CsvFile`-Klasse verwaltet CSV-Dateien. Sie kann Daten aus CSV-Dateien lesen, neue Datensätze hinzufügen, vorhandene Datensätze ersetzen und löschen.
 - Die `EmailDocument`-Klasse erstellt E-Mail-Dokumente mit Platzhaltern, die durch aktuelle Daten ersetzt werden.
