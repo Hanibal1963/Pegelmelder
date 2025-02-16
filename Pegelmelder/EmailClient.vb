@@ -56,7 +56,7 @@ Namespace Pegelmelder
 		''' <param name="[To]">Empfängeradresse der Email</param>
 		''' <param name="Msg">Inhalt der Email (Text oder Htmlquelltext)</param>
 		''' <param name="Html">False für "Nur Text", True für HTML (Quelltext)</param>
-		Public Sub Send(From As String, Name As String, Subject As String, [To] As String, Msg As String, Optional Html As Boolean = True)
+		Public Sub Send(From As String, Name As String, Subject As String, [To] As String, Msg As String, Html As Boolean)
 			Dim mail As New MailMessage
 			With mail
 				.From = New MailAddress(From, Name)
@@ -70,6 +70,19 @@ Namespace Pegelmelder
 			Catch ex As Exception
 				Console.WriteLine(String.Format(My.Resources.SendMailErrorMsg, ex.ToString))
 			End Try
+		End Sub
+
+		''' <summary>
+		''' Sendet die erstellte Email
+		''' </summary>
+		''' <param name="From">Absenderadresse der Email</param>
+		''' <param name="Name">Anzeigename des Absenders</param>
+		''' <param name="Subject">Betreff der Email</param>
+		''' <param name="[To]">Empfängeradresse der Email</param>
+		''' <param name="Msg">Inhalt der Email (Text oder Htmlquelltext)</param>
+		''' <remarks>Die Email wird im Html-Format gesendet.</remarks>
+		Public Sub Send(From As String, Name As String, Subject As String, [To] As String, Msg As String)
+			Me.Send(From, Name, Subject, [To], Msg, True)
 		End Sub
 
 	End Class

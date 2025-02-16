@@ -69,8 +69,8 @@ Namespace Pegelmelder
       LoadConfig(conffile)
 
       'Konfiguration für Server überprüfen
-      If String.IsNullOrEmpty(Server) Or String.IsNullOrEmpty(User) Or
-          String.IsNullOrEmpty(Passw) Or String.IsNullOrEmpty(Port) Or
+      If String.IsNullOrEmpty(Server) OrElse String.IsNullOrEmpty(User) OrElse
+          String.IsNullOrEmpty(Passw) OrElse String.IsNullOrEmpty(Port) OrElse
           String.IsNullOrEmpty(Absender) Then
         Console.WriteLine(String.Format(My.Resources.ConfigFailMsg, conffile))
         Exit Sub
@@ -111,7 +111,7 @@ Namespace Pegelmelder
       End If
 
       'Überprüfen ob neue Daten vorliegen
-      If NewHohenwarteData = False And NewBleilochData = False Then
+      If NewHohenwarteData = False AndAlso NewBleilochData = False Then
         'Beenden wenn keine neuen Daten vorhanden sind
         Exit Sub
       Else
