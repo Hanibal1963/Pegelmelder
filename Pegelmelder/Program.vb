@@ -611,6 +611,9 @@ Module Program
         Case line.StartsWith("Absender:")
           Absender = line.Split(":").Last
 
+        Case Else
+          Exit Select
+
       End Select
 
     Next
