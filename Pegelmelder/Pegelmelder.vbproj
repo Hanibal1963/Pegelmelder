@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SchlumpfSoft.Pegelmelder</RootNamespace>
+    <RootNamespace>SchlumpfSoft</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyVersion>1.2025.0215.1500</AssemblyVersion>
     <FileVersion>1.2025.0215.1500</FileVersion>
