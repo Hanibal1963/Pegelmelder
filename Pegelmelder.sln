@@ -7,7 +7,9 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Pegelmelder", "Pegelmelder\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{5263FA06-49D9-4348-85F3-1DE992E167F1}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		.github\workflows\codacy.yml = .github\workflows\codacy.yml
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
