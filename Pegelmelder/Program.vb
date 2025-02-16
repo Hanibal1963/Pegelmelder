@@ -69,12 +69,31 @@ Namespace Pegelmelder
       LoadConfig(conffile)
 
       'Konfiguration für Server überprüfen
-      If String.IsNullOrEmpty(Server) OrElse String.IsNullOrEmpty(User) OrElse
-          String.IsNullOrEmpty(Passw) OrElse String.IsNullOrEmpty(Port) OrElse
-          String.IsNullOrEmpty(Absender) Then
-        Console.WriteLine(String.Format(My.Resources.ConfigFailMsg, conffile))
-        Exit Sub
-      End If
+      Select Case True
+        Case String.IsNullOrEmpty(Server)
+          PrintMsg($"Die Serveradresse", conffile)
+          Exit Sub
+
+        Case String.IsNullOrEmpty(User)
+          PrintMsg($"Der Benutzername", conffile)
+          Exit Sub
+
+        Case String.IsNullOrEmpty(Passw)
+          PrintMsg($"Das Passwort", conffile)
+          Exit Sub
+
+        Case String.IsNullOrEmpty(Port)
+          PrintMsg($"Der Serverport", conffile)
+          Exit Sub
+
+        Case String.IsNullOrEmpty(Absender)
+          PrintMsg($"Die Absender Email", conffile)
+          Exit Sub
+
+        Case Else
+          Exit Select
+
+      End Select
 
 #End Region
 
@@ -117,6 +136,11 @@ Namespace Pegelmelder
       Else
         SendMails()
       End If
+
+    End Sub
+
+    Private Sub PrintMsg(Msg As String, File As String)
+      Console.WriteLine(String.Format(My.Resources.ConfigFailMsg, File, Msg))
 
     End Sub
 

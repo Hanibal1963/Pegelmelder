@@ -103,6 +103,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Sucht eine lokalisierte Zeichenfolge, die Die Konfigurationsdatei (&quot;{0}&quot;) ist fehlerhaft.
+        '''({1} darf nicht leer sein.)
         '''Bitte trage die korrekten Daten in diese Datei ein. ähnelt.
         '''</summary>
         Friend ReadOnly Property ConfigFailMsg() As String

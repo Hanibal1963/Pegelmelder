@@ -122,13 +122,14 @@
     <value>..\Resources\BleilochDatenTabellenTemplate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="CheckingConfigFile" xml:space="preserve">
-    <value>Prüfe ob Konfigurationsdatei existiert ("{0}")</value>
+    <value>PrÃ¼fe ob Konfigurationsdatei existiert ("{0}")</value>
   </data>
   <data name="CheckingEmailDataFile" xml:space="preserve">
-    <value>Prüfe ob Datenbank für Emaildaten existiert ("{0}")</value>
+    <value>PrÃ¼fe ob Datenbank fÃ¼r Emaildaten existiert ("{0}")</value>
   </data>
   <data name="ConfigFailMsg" xml:space="preserve">
     <value>Die Konfigurationsdatei ("{0}") ist fehlerhaft.
+({1} darf nicht leer sein.)
 Bitte trage die korrekten Daten in diese Datei ein.</value>
   </data>
   <data name="ConfigFileNotFound" xml:space="preserve">
@@ -144,7 +145,7 @@ Bitte trage die korrekten Daten in diese Datei ein.</value>
     <value>..\Resources\DatenZeilenTemplate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EmailDataFileNotFound" xml:space="preserve">
-    <value>Die Datenbank für Emaildaten ("{0}") existiert noch nicht.</value>
+    <value>Die Datenbank fÃ¼r Emaildaten ("{0}") existiert noch nicht.</value>
   </data>
   <data name="EmaildatenTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EmaildatenTemplate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
@@ -159,7 +160,7 @@ Bitte trage die korrekten Daten in diese Datei ein.</value>
     <value>Bitte trage deine Daten in diese Datei ein.</value>
   </data>
   <data name="InsertEmailData" xml:space="preserve">
-    <value>In diese Datenbank müssen noch die Empfänger der Emails eingetragen werden.</value>
+    <value>In diese Datenbank mÃ¼ssen noch die EmpfÃ¤nger der Emails eingetragen werden.</value>
   </data>
   <data name="LeerzellenTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeerzellenTemplate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
