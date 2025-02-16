@@ -102,6 +102,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Sucht eine lokalisierte Zeichenfolge, die Die Konfigurationsdatei (&quot;{0}&quot;) ist fehlerhaft.
+        '''Bitte trage die korrekten Daten in diese Datei ein. ähnelt.
+        '''</summary>
+        Friend ReadOnly Property ConfigFailMsg() As String
+            Get
+                Return ResourceManager.GetString("ConfigFailMsg", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Sucht eine lokalisierte Zeichenfolge, die Die Konfigurationsdatei (&quot;{0}&quot;) wurde nicht gefunden. ähnelt.
         '''</summary>
         Friend ReadOnly Property ConfigFileNotFound() As String

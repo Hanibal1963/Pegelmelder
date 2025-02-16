@@ -127,6 +127,10 @@
   <data name="CheckingEmailDataFile" xml:space="preserve">
     <value>Prüfe ob Datenbank für Emaildaten existiert ("{0}")</value>
   </data>
+  <data name="ConfigFailMsg" xml:space="preserve">
+    <value>Die Konfigurationsdatei ("{0}") ist fehlerhaft.
+Bitte trage die korrekten Daten in diese Datei ein.</value>
+  </data>
   <data name="ConfigFileNotFound" xml:space="preserve">
     <value>Die Konfigurationsdatei ("{0}") wurde nicht gefunden.</value>
   </data>

@@ -72,8 +72,7 @@ Namespace Pegelmelder
       If String.IsNullOrEmpty(Server) Or String.IsNullOrEmpty(User) Or
           String.IsNullOrEmpty(Passw) Or String.IsNullOrEmpty(Port) Or
           String.IsNullOrEmpty(Absender) Then
-        Console.WriteLine($"Die Konfigurationsdatei (""{conffile}"") ist fehlerhaft.")
-        Console.WriteLine($"Bitte trage die korrekten Daten in diese Datei ein.")
+        Console.WriteLine(String.Format(My.Resources.ConfigFailMsg, conffile))
         Exit Sub
       End If
 
@@ -120,7 +119,6 @@ Namespace Pegelmelder
       End If
 
     End Sub
-
 
 #Region "Hohenwartefunktionen"
 
